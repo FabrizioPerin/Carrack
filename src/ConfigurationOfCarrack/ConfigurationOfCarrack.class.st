@@ -45,7 +45,7 @@ ConfigurationOfCarrack >> default: spec [
 		for: #common
 		do: [ 
 			spec blessing: #default.
-			spec repository: 'http://www.squeaksource.com/Babel'.
+			spec repository: 'http://www.squeaksource.com/Carrack'.
 		"spec project: 'MooseJEE for Babel' with: [
 				spec
 					className: 'ConfigurationOfMooseJEE';
