@@ -2,22 +2,24 @@ Class {
 	#name : #CAKAssociation,
 	#superclass : #CAKAbstractAssociation,
 	#instVars : [
-		'assciationTarget',
-		'associationTarget',
-		'assciationSource'
+		'associationSource',
+		'associationTarget'
 	],
 	#category : #'Carrack-Model'
 }
 
 { #category : #accessing }
 CAKAssociation >> associationSource [
-	^assciationSource
+	<MSEProperty: #associationSource type: #CAKentity opposite: #outgoingAssociations>
+	<MSEComment: 'Carrack entity that is accessed by another carrack entity.'>
+
+	^associationSource
 ]
 
 { #category : #accessing }
 CAKAssociation >> associationSource: aCarrackEntity [
 
-	assciationSource := FMMultivalueLink 
+	associationSource := FMMultivalueLink 
 								on: self
 								update: #outgoingAssociations
 								from: self associationSource  
@@ -35,7 +37,7 @@ CAKAssociation >> associationTarget [
 { #category : #accessing }
 CAKAssociation >> associationTarget: aCarrackEntity [
 
-	assciationTarget := FMMultivalueLink 
+	associationTarget := FMMultivalueLink 
 								on: self
 								update: #incomingAssociations 
 								from: self associationTarget  

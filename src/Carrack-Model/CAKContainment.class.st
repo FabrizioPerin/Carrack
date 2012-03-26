@@ -10,7 +10,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 CAKContainment >> container [
-	<MSEProperty: #container type: #CAKEntity opposite: #containedEntity>
+	<MSEProperty: #container type: #CAKEntity opposite: #containedEntities>
 	<MSEComment: 'Carrack entity contains another carrack entity.'>
 	
 	^container
@@ -28,10 +28,10 @@ CAKContainment >> container: aCarrackEntity [
 
 { #category : #'as yet unclassified' }
 CAKContainment >> content [
-	<MSEProperty: #content type: #CAKEntity opposite: #containerEntity>
-	<MSEComment: 'Carrack entity is contained in another carrack entity.'>
+	<MSEProperty: #content type: #CAKEntity opposite: #containerEntities>
+	<MSEComment: 'Carrack entity that is contained in another carrack entity.'>
 	
-	^container
+	^content
 ]
 
 { #category : #accessing }

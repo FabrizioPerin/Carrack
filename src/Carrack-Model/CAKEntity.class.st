@@ -52,7 +52,7 @@ CAKEntity >> initialize [
 	incomingAssociations := FMMultivalueLink on: self opposite: #associationTarget:.
 	outgoingAssociations := FMMultivalueLink on: self opposite: #associationSource:.
 	containedEntities := FMMultivalueLink on: self opposite: #container:.
-	containerEntities := FMMultivalueLink on: self opposite: #contained:.
+	containerEntities := FMMultivalueLink on: self opposite: #content:.
 	
 ]
 
