@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+CAKContainment class >> annotation [
+	<MSEClass: #CAKContainment super: #CAKAbstractAssociation>
+	<package: #'Carrack-Model'>
+	^self
+]
+
+{ #category : #'as yet unclassified' }
 CAKContainment >> container [
 	<MSEProperty: #container type: #CAKEntity opposite: #containedEntities>
 	<MSEComment: 'Carrack entity contains another carrack entity.'>

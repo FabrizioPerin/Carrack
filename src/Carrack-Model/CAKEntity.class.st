@@ -10,6 +10,13 @@ Class {
 	#category : #'Carrack-Model'
 }
 
+{ #category : #'as yet unclassified' }
+CAKEntity class >> annotation [
+	<MSEClass: #CAKEntity super: #MooseEntity>
+	<package: #'Carrack-Model'>
+	^self
+]
+
 { #category : #accessing }
 CAKEntity >> addContainedEntity: aCAKContainment [
 	self containedEntities add: aCAKContainment

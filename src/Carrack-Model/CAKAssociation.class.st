@@ -8,9 +8,16 @@ Class {
 	#category : #'Carrack-Model'
 }
 
+{ #category : #'as yet unclassified' }
+CAKAssociation class >> annotation [
+	<MSEClass: #CAKAssociation super: #CAKAbstractAssociation>
+	<package: #'Carrack-Model'>
+	^self
+]
+
 { #category : #accessing }
 CAKAssociation >> associationSource [
-	<MSEProperty: #associationSource type: #CAKentity opposite: #outgoingAssociations>
+	<MSEProperty: #associationSource type: #CAKEntity opposite: #outgoingAssociations>
 	<MSEComment: 'Carrack entity that is accessed by another carrack entity.'>
 
 	^associationSource
@@ -28,7 +35,7 @@ CAKAssociation >> associationSource: aCarrackEntity [
 
 { #category : #accessing }
 CAKAssociation >> associationTarget [
-	<MSEProperty: #assocaitionTarget type: #CAKentity opposite: #incomingAssociations>
+	<MSEProperty: #associationTarget type: #CAKEntity opposite: #incomingAssociations>
 	<MSEComment: 'Carrack entity that access another carrack entity.'>
 	
 	^associationTarget

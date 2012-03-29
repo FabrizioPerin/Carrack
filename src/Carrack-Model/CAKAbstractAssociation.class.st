@@ -4,6 +4,13 @@ Class {
 	#category : #'Carrack-Model'
 }
 
+{ #category : #'as yet unclassified' }
+CAKAbstractAssociation class >> annotation [
+	<MSEClass: #CAKAbstractAssociation super: #MooseEntity>
+	<package: #'Carrack-Model'>
+	^self
+]
+
 { #category : #accessing }
 CAKAbstractAssociation >> from [
 	<MSEProperty: #from type: #CAKEntity> <derived>
