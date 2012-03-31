@@ -90,6 +90,21 @@ CAKEntityTests >> testIncomingAssociations [
 ]
 
 { #category : #'as yet unclassified' }
+CAKEntityTests >> testModel [
+	| entity anObject |
+	
+	entity := CAKEntity new.
+	anObject := Object new.
+	
+	self assert: (entity isMemberOf: CAKEntity).
+ 	self assert: entity model equals: nil.
+	
+	entity model: anObject.
+	
+	self assert: entity model equals: anObject.
+]
+
+{ #category : #'as yet unclassified' }
 CAKEntityTests >> testOutgoingAssociations [
 	| entity association |
 	
