@@ -1,6 +1,6 @@
 Class {
 	#name : #CAKAbstractAssociation,
-	#superclass : #MooseEntity,
+	#superclass : #CAKAbstractEntity,
 	#category : #'Carrack-Model'
 }
 
@@ -17,11 +17,6 @@ CAKAbstractAssociation >> from [
 	<MSEComment: 'Generic accessor to the entity originating the association. Refined by subclasses'>
 	
 	^ self subclassResponsibility
-]
-
-{ #category : #'initialize-release' }
-CAKAbstractAssociation >> initialize [
-	super initialize
 ]
 
 { #category : #accessing }

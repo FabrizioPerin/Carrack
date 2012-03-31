@@ -1,11 +1,12 @@
 Class {
 	#name : #CAKEntity,
-	#superclass : #MooseEntity,
+	#superclass : #CAKAbstractEntity,
 	#instVars : [
 		'outgoingAssociations',
 		'containedEntities',
 		'containerEntities',
-		'incomingAssociations'
+		'incomingAssociations',
+		'model'
 	],
 	#category : #'Carrack-Model'
 }
@@ -61,6 +62,16 @@ CAKEntity >> initialize [
 	containedEntities := FMMultivalueLink on: self opposite: #container:.
 	containerEntities := FMMultivalueLink on: self opposite: #content:.
 	
+]
+
+{ #category : #accessing }
+CAKEntity >> model [
+	^ model
+]
+
+{ #category : #accessing }
+CAKEntity >> model: anObject [
+	model := anObject
 ]
 
 { #category : #accessing }
