@@ -2,10 +2,53 @@ Class {
 	#name : #CAKModelBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'cakModel'
+		'cakModel',
+		'groups'
 	],
 	#category : #'Carrack-Model'
 }
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilder >> consistencyCheck: aDictionary [
+	| allKnownSelectors |
+	
+	self model containmentSelectors
+		do: [ :selectorVector | 
+			((aDictionary keys anySatisfy: [ :key | key name asSymbol = selectorVector first ])
+				and: [ aDictionary keys anySatisfy: [ :key | key name asSymbol = selectorVector second ] ])
+				ifFalse: [ ^ false ] ].
+	
+	allKnownSelectors := Set new.
+	allKnownSelectors
+		addAll:
+			(self model containmentSelectors flatCollect: [ :each | OrderedCollection with: each first with: each second ]).
+	(allKnownSelectors size = aDictionary keys size)
+		ifFalse: [ ^ false ].
+		
+	^ true
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilder >> create [
+	| types |
+
+	types := self identifyTypes.
+	self consistencyCheck: types
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilder >> createGroups: aDictionary [
+
+	aDictionary keysAndValuesDo: [:key :value |
+		| cakGroup |
+		cakGroup := CAKEntityGroup new.
+		cakGroup type: key.
+		cakGroup addAll: value.
+		self model add: cakGroup. ].
+
+
+	
+]
 
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> defineAssociationSelector: aSelector from: aClassName to: anotherClassName [
@@ -24,11 +67,28 @@ CAKModelBuilder >> defineContainementSelector: aSelector from: aClassName to: an
 ]
 
 { #category : #'as yet unclassified' }
+CAKModelBuilder >> identifyTypes [
+	| types |
+	
+	types := Dictionary new.
+	
+	self model do: [ :cakEl | 
+		types 
+			at: cakEl model class 
+			ifPresent: [:value | value add: cakEl] 
+			ifAbsent: [types at: cakEl model class put: (OrderedCollection with: cakEl) ] ].
+	
+	^ types
+]
+
+{ #category : #'as yet unclassified' }
 CAKModelBuilder >> initialize [ 
 
 	super initialize.
 
 	cakModel := CAKModel new.
+	
+	^self
 ]
 
 { #category : #'as yet unclassified' }
@@ -39,6 +99,12 @@ CAKModelBuilder >> model [
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> model: aCAKModel [
 	cakModel := aCAKModel.
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilder >> node: anObject [
+	
+	^self nodes: (OrderedCollection with: anObject). 
 ]
 
 { #category : #'as yet unclassified' }

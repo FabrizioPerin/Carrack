@@ -62,6 +62,7 @@ CAKEntity >> initialize [
 	containedEntities := FMMultivalueLink on: self opposite: #container:.
 	containerEntities := FMMultivalueLink on: self opposite: #content:.
 	
+	^self 
 ]
 
 { #category : #accessing }
@@ -74,7 +75,20 @@ CAKEntity >> model: anObject [
 	model := anObject
 ]
 
+{ #category : #initialization }
+CAKEntity >> mooseNameOn: aStream [
+	aStream nextPutAll: self class.
+	aStream nextPut: ' '.
+	
+]
+
 { #category : #accessing }
 CAKEntity >> outgoingAssociations [
 	^ outgoingAssociations
+]
+
+{ #category : #initialization }
+CAKEntity >> printOn: aStream [
+	self originalPrintOn: aStream.
+	aStream nextPutAll: ' model: '; print: self model
 ]
