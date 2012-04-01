@@ -22,12 +22,32 @@ CAKModelBuilderTests >> testConsistencyCheck [
 ]
 
 { #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testCreateContainmentRelations [
+	| builder cakFakeContainer  fakeTarget1 fakeTarget2 |
+
+	builder := CAKModelBuilder new.
+	cakFakeContainer := CAKFakeContainerObject new.
+	fakeTarget1 := CAKFakeContainedObject new.
+	fakeTarget2 := CAKFakeContainedObject new.
+	
+	cakFakeContainer fakeContainment add: fakeTarget1. 
+	cakFakeContainer fakeContainment add: fakeTarget2.
+
+	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
+	
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContainedObject.
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContainedObject.
+	
+	self assert: (builder createContainmentRelations: builder identifyTypes).
+]
+
+{ #category : #'as yet unclassified' }
 CAKModelBuilderTests >> testIdentifyTypes [
 	| builder anotherObject anObject collection smallinteger |
 
 	builder := CAKModelBuilder new.
-	anObject := Object new.
-	collection := Collection new.
+	anObject := CAKFakeContainerObject new.
+	collection := OrderedCollection new.
 	smallinteger := 1.
 
 	builder nodes: (OrderedCollection with: anObject with: collection with: smallinteger).
@@ -41,15 +61,15 @@ CAKModelBuilderTests >> testIdentifyTypes [
 	self assert: ((builder identifyTypes at: SmallInteger) first isMemberOf: CAKEntity). 
 	self assert: (builder identifyTypes at: SmallInteger) first model equals: 1.
 	
-	self assert: (builder identifyTypes keys anySatisfy: [:key | key = Object]).
-	self assert: ((builder identifyTypes at: Object) isMemberOf: OrderedCollection).
-	self assert: ((builder identifyTypes at: Object) first isMemberOf: CAKEntity). 
-	self assert: (builder identifyTypes at: Object) first model equals: anObject.
+	self assert: (builder identifyTypes keys anySatisfy: [:key | key = CAKFakeContainerObject]).
+	self assert: ((builder identifyTypes at: CAKFakeContainerObject) isMemberOf: OrderedCollection).
+	self assert: ((builder identifyTypes at: CAKFakeContainerObject) first isMemberOf: CAKEntity). 
+	self assert: (builder identifyTypes at: CAKFakeContainerObject) first model equals: anObject.
 	
-	self assert: (builder identifyTypes keys anySatisfy: [:key | key = Collection]).
-	self assert: ((builder identifyTypes at: Collection) isMemberOf: OrderedCollection).
-	self assert: ((builder identifyTypes at: Collection) first isMemberOf: CAKEntity). 
-	self assert: (builder identifyTypes at: Collection) first model equals: collection.
+	self assert: (builder identifyTypes keys anySatisfy: [:key | key = OrderedCollection]).
+	self assert: ((builder identifyTypes at: OrderedCollection) isMemberOf: OrderedCollection).
+	self assert: ((builder identifyTypes at: OrderedCollection) first isMemberOf: CAKEntity). 
+	self assert: (builder identifyTypes at: OrderedCollection) first model equals: collection.
 ]
 
 { #category : #'as yet unclassified' }
