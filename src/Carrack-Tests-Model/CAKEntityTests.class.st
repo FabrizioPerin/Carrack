@@ -105,6 +105,17 @@ CAKEntityTests >> testModel [
 ]
 
 { #category : #'as yet unclassified' }
+CAKEntityTests >> testOriginalPrintOn [
+	| entity anObject aStream |
+	
+	entity := CAKEntity new.
+	aStream := ReadWriteStream on: ''.
+	entity originalPrintOn: aStream.
+	
+	self assert: aStream contents equals: 'a CAKEntity #noname'.
+]
+
+{ #category : #'as yet unclassified' }
 CAKEntityTests >> testOutgoingAssociations [
 	| entity association |
 	
@@ -124,4 +135,23 @@ CAKEntityTests >> testOutgoingAssociations [
 	
 	
 	
+]
+
+{ #category : #'as yet unclassified' }
+CAKEntityTests >> testPrintOn [
+	| entity anObject aStream |
+	
+	entity := CAKEntity new.
+	aStream := ReadWriteStream on: ''.
+	entity printOn: aStream.
+	
+	self assert: aStream contents equals: 'a CAKEntity #noname model: nil'.
+
+	anObject := Object new.
+	aStream := ReadWriteStream on: ''.
+	
+	entity model: anObject.
+	entity printOn: aStream.
+	
+	self assert: aStream contents equals: 'a CAKEntity #noname model: an Object'
 ]
