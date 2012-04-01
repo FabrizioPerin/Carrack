@@ -77,8 +77,9 @@ CAKEntity >> model: anObject [
 
 { #category : #initialization }
 CAKEntity >> mooseNameOn: aStream [
-	aStream nextPutAll: self class.
+	self printOn: aStream.
 	aStream nextPut: ' '.
+	aStream nextPutAll: ' model: '; print: self model
 	
 ]
 
@@ -89,6 +90,6 @@ CAKEntity >> outgoingAssociations [
 
 { #category : #initialization }
 CAKEntity >> printOn: aStream [
-	self originalPrintOn: aStream.
-	aStream nextPutAll: ' model: '; print: self model
+	aStream nextPutAll: self class name.
+	
 ]

@@ -37,6 +37,30 @@ CAKModelBuilder >> create [
 ]
 
 { #category : #'as yet unclassified' }
+CAKModelBuilder >> createContainmentRelations: aDictionary [
+
+	self model containmentSelectors do: [:vector | 
+		aDictionary keys do: [:key |
+			(aDictionary at: vector first) do: [:value |self halt.
+				value model perform: vector third.
+				]]
+			].
+		
+		"
+		 Period or right bracket expected ->keysAndValuesDo: [:key :value |
+		| cakGroup |
+		cakGroup := CAKEntityGroup new.
+		cakGroup type: key.
+		cakGroup addAll: value.
+		self model add: cakGroup. ].
+
+		]
+	
+
+	"
+]
+
+{ #category : #'as yet unclassified' }
 CAKModelBuilder >> createGroups: aDictionary [
 
 	aDictionary keysAndValuesDo: [:key :value |
@@ -74,9 +98,9 @@ CAKModelBuilder >> identifyTypes [
 	
 	self model do: [ :cakEl | 
 		types 
-			at: cakEl model class 
+			at: cakEl model class name
 			ifPresent: [:value | value add: cakEl] 
-			ifAbsent: [types at: cakEl model class put: (OrderedCollection with: cakEl) ] ].
+			ifAbsent: [types at: cakEl model class name put: (OrderedCollection with: cakEl) ] ].
 	
 	^ types
 ]
