@@ -22,7 +22,7 @@ CAKFakeContainerObject >> fakeContainment: anObject [
 CAKFakeContainerObject >> initialize [
 	super initialize.
 	
-	fakeContainment := nil.
+	fakeContainment := OrderedCollection new.
 	
 	^self 
 ]
