@@ -5,8 +5,7 @@ Class {
 		'outgoingAssociations',
 		'containedEntities',
 		'containerEntities',
-		'incomingAssociations',
-		'model'
+		'incomingAssociations'
 	],
 	#category : #'Carrack-Model'
 }
@@ -65,22 +64,9 @@ CAKEntity >> initialize [
 	^self 
 ]
 
-{ #category : #accessing }
-CAKEntity >> model [
-	^ model
-]
-
-{ #category : #accessing }
-CAKEntity >> model: anObject [
-	model := anObject
-]
-
-{ #category : #initialization }
-CAKEntity >> mooseNameOn: aStream [
-	self printOn: aStream.
-	aStream nextPut: ' '.
-	aStream nextPutAll: ' model: '; print: self model
-	
+{ #category : #printing }
+CAKEntity >> originalPrintOn: aStream [
+	super printOn: aStream
 ]
 
 { #category : #accessing }
@@ -88,8 +74,8 @@ CAKEntity >> outgoingAssociations [
 	^ outgoingAssociations
 ]
 
-{ #category : #initialization }
+{ #category : #printing }
 CAKEntity >> printOn: aStream [
-	aStream nextPutAll: self class name.
-	
+	self originalPrintOn: aStream.
+	aStream nextPutAll: ' model: '; print: self model
 ]

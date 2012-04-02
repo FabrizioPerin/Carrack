@@ -1,10 +1,6 @@
 Class {
 	#name : #CAKModel,
 	#superclass : #MooseAbstractGroup,
-	#instVars : [
-		'containmentSelectors',
-		'associationSelectors'
-	],
 	#category : #'Carrack-Model'
 }
 
@@ -16,31 +12,23 @@ CAKModel class >> annotation [
 ]
 
 { #category : #accessing }
-CAKModel >> associationSelectors [
-	^ associationSelectors
+CAKModel >> allAssociations [
+	^self allWithType: CAKAssociation.
 ]
 
 { #category : #accessing }
-CAKModel >> associationSelectors: anObject [
-	associationSelectors := anObject
+CAKModel >> allEntities [
+	^self allWithType: CAKEntity.
 ]
 
 { #category : #accessing }
-CAKModel >> containmentSelectors [
-	^ containmentSelectors
-]
-
-{ #category : #accessing }
-CAKModel >> containmentSelectors: anObject [
-	containmentSelectors := anObject
+CAKModel >> allGroups [
+	^self allWithType: CAKEntityGroup.
 ]
 
 { #category : #accessing }
 CAKModel >> initialize [
 	super initialize.
 	
-	associationSelectors := OrderedCollection new. 
-	containmentSelectors := OrderedCollection new.
-
 	^self
 ]
