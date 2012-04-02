@@ -24,19 +24,36 @@ CAKModelBuilderTests >> testAssociationSelectors [
 
 { #category : #'as yet unclassified' }
 CAKModelBuilderTests >> testConsistencyCheck [
-	| builder anotherObject anObject collection smallinteger |
+	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
 
 	builder := CAKModelBuilder new.
-	anObject := Object new.
-	collection := OrderedCollection new.
-	smallinteger := 1.
+	cakContainer := CAKFakeContainerObject new.
+	cakContent1 := CAKFakeContentObject new.
+	cakContent2 := CAKFakeContentObject new.
 
-	builder nodes: (OrderedCollection with: anObject with: collection with: smallinteger).
+	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2).
 	
-	builder defineContainementSelector: #fakeContain from: #Object to: #OrderedCollection.
-	builder defineContainementSelector: #fakeContain from: #Object to: #SmallInteger.
-	
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+			
 	self assert: (builder consistencyCheck: builder identifyTypes).
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testConsistencyCheckDeny [
+	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
+
+	builder := CAKModelBuilder new.
+	cakContainer := CAKFakeContainerObject new.
+	cakContent1 := CAKFakeContentObject new.
+	cakContent2 := CAKFakeContentObject new.
+	cakFakObj1 := CAKFakeObject new.
+	cakFakObj2 := CAKFakeObject new.
+
+	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2 with: cakFakObj1 with: cakFakObj2).
+	
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+			
+	self deny: (builder consistencyCheck: builder identifyTypes).
 ]
 
 { #category : #'as yet unclassified' }
@@ -64,14 +81,14 @@ CAKModelBuilderTests >> testCreateAssociationRelations [
 	
 	builder := CAKModelBuilder new.
 	cakFakeContainer := CAKFakeContainerObject new.
-	fakeTarget1 := CAKFakeContainedObject new.
-	fakeTarget2 := CAKFakeContainedObject new.
+	fakeTarget1 := CAKFakeContentObject new.
+	fakeTarget2 := CAKFakeContentObject new.
 	cakFakeContainer fakeContainment add: fakeTarget1.
 	cakFakeContainer fakeContainment add: fakeTarget2.
 	
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
 	
-	builder defineAssociationSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContainedObject.
+	builder defineAssociationSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
 	containmentRelations := builder createAssociationRelations: builder identifyTypes.
 	
@@ -87,18 +104,20 @@ CAKModelBuilderTests >> testCreateContainmentRelations [
 	
 	builder := CAKModelBuilder new.
 	cakFakeContainer := CAKFakeContainerObject new.
-	fakeTarget1 := CAKFakeContainedObject new.
-	fakeTarget2 := CAKFakeContainedObject new.
+	fakeTarget1 := CAKFakeContentObject new.
+	fakeTarget2 := CAKFakeContentObject new.
 	cakFakeContainer fakeContainment add: fakeTarget1.
 	cakFakeContainer fakeContainment add: fakeTarget2.
 	
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContainedObject.
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
 	containmentRelations := builder createContainmentRelations: builder identifyTypes.
 	
+	self assert: (containmentRelations isMemberOf: MooseGroup). 
 	self assert: containmentRelations size = 2.
+	self assert: (containmentRelations allSatisfy: [:each | each isMemberOf: CAKContainment]).
 	self assert: containmentRelations first container model equals: cakFakeContainer.
 	self assert: (containmentRelations first content model = fakeTarget1 or: [ containmentRelations first content model = fakeTarget2 ]).
 	self assert: (containmentRelations second content model = fakeTarget1 or: [ containmentRelations second content model = fakeTarget2 ]).
@@ -163,6 +182,46 @@ CAKModelBuilderTests >> testIdentifyTypes [
 	self assert: ((builder identifyTypes at: OrderedCollection name) isMemberOf: OrderedCollection).
 	self assert: ((builder identifyTypes at: OrderedCollection name) first isMemberOf: CAKEntity). 
 	self assert: (builder identifyTypes at: OrderedCollection name) first model equals: collection.
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testInferAssociationsOn [
+	| builder cakContainer1 cakContainer2 cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
+
+	builder := CAKModelBuilder new.
+	cakContainer1 := CAKFakeContainerObject new.
+	cakContent1 := CAKFakeContentObject new.
+	cakContent2 := CAKFakeContentObject new.
+	cakContainer1 fakeContainment add: cakContent1.
+	cakContainer1 fakeContainment add: cakContent2.
+	cakContainer2 := CAKFakeContainerObject new.
+	cakFakObj1 := CAKFakeObject new.
+	cakFakObj2 := CAKFakeObject new.
+	cakContainer2 fakeContainment add: cakFakObj1.
+	cakContainer2 fakeContainment add: cakFakObj2.
+	
+	cakContent1 fakeAssociation add: cakFakObj1.
+	cakContent1 fakeAssociation add: cakFakObj2.
+	
+	builder nodes: (OrderedCollection with: cakContainer1 with: cakContent1 with: cakContent2 with: cakContainer2 with: cakFakObj1 with: cakFakObj2).
+	
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineAssociationSelector: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeObject.
+	
+	types := builder identifyTypes.
+	
+	"self assert: (builder consistencyCheck: types)."
+	
+	self assert: builder model allAssociations size equals: 0.
+	
+	builder createContainmentRelations: types.
+	builder createAssociationRelations: types.
+	
+	self assert: builder model allAssociations size equals: 2.
+	
+	builder inferAssociationRelations.
+	
+	self assert: builder model allAssociations size equals: 3.
 ]
 
 { #category : #'as yet unclassified' }
