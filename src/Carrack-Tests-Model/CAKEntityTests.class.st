@@ -105,17 +105,6 @@ CAKEntityTests >> testModel [
 ]
 
 { #category : #'as yet unclassified' }
-CAKEntityTests >> testOriginalPrintOn [
-	| entity anObject aStream |
-	
-	entity := CAKEntity new.
-	aStream := ReadWriteStream on: ''.
-	entity originalPrintOn: aStream.
-	
-	self assert: aStream contents equals: 'a CAKEntity #noname'.
-]
-
-{ #category : #'as yet unclassified' }
 CAKEntityTests >> testOutgoingAssociations [
 	| entity association |
 	
