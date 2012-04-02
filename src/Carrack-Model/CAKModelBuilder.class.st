@@ -53,9 +53,13 @@ CAKModelBuilder >> containmentSelectors: anObject [
 { #category : #tokens }
 CAKModelBuilder >> create [
 	| types |
-
+	
 	types := self identifyTypes.
-	self consistencyCheck: types
+	(self consistencyCheck: types)
+		ifTrue: [ 
+			self createContainmentRelations: types.
+			self createAssociationRelations: types.
+			self inferAssociationRelations ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -188,24 +192,25 @@ CAKModelBuilder >> inferAssociationRelations [
 
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> inferAssociationRelationsOn: aCollectionOfAssociations [
-	| associations result |
-	
-	associations := self model allAssociations.
+	| associations result assocToCreate |
 	result := OrderedCollection new.
-	
+	assocToCreate := Dictionary new.
 	aCollectionOfAssociations
 		do: [ :association | 
-			| sourceContainer targetContainer |
-			sourceContainer := association associationSource containerEntities.
-			targetContainer := association associationTarget containerEntities.
-			(sourceContainer outgoingAssociations select: [ :each | each associationTarget = targetContainer ]) isEmpty
-				ifTrue: [ 
-					| newAssociation |
-					newAssociation := CAKAssociation new.
-					newAssociation associationSource: sourceContainer.
-					newAssociation associationTarget: targetContainer.
-					newAssociation model: association.
-					result add: newAssociation ] ].
+			| sourceContainers targetContainers |
+			sourceContainers := association associationSource containerEntities.
+			targetContainers := association associationTarget containerEntities.
+			sourceContainers
+				do: [ :sourceContainer | 
+					targetContainers
+						do: [ :targetContainer | 
+							assocToCreate
+								at: sourceContainer container -> targetContainer container
+								ifPresent: [ :value | value add: association ]
+								ifAbsent: [ assocToCreate at: sourceContainer container -> targetContainer container put: (OrderedCollection with: association) ] ] ] ].
+	
+	self instanciateAssociationFrom: assocToCreate.
+	
 	^ result
 ]
 
@@ -219,6 +224,26 @@ CAKModelBuilder >> initialize [
 	containmentSelectors := OrderedCollection new.
 	
 	^self
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilder >> instanciateAssociationFrom: aDictionary [
+	| result |
+
+	result := OrderedCollection new.
+
+	aDictionary
+		keysAndValuesDo: [ :key :value | 
+			| newAssociation |
+			newAssociation := CAKAssociation new.
+			newAssociation associationSource: key key.
+			newAssociation associationTarget: key value.
+			newAssociation model: value.
+			self model add: newAssociation.
+			result add: newAssociation.
+			 ].
+	
+	^ result
 ]
 
 { #category : #accessing }
