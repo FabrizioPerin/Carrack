@@ -64,11 +64,9 @@ CAKModelBuilderTests >> testContainmentSelectors [
 	
 	self assert: (model containmentSelectors isMemberOf: OrderedCollection).
 	self assert: model containmentSelectors size equals: 0.
-	
-	containment1 := CAKContainment new.
-	containment2 := CAKContainment new.
-	model containmentSelectors add: containment1.
-	model containmentSelectors add: containment2.
+
+	model containmentSelectors add: (OrderedCollection with: #aSelector with: #aClassName with: #anotherClassName).
+	model containmentSelectors add: (OrderedCollection with: #aSelector with: #aClassName with: #anotherClassName).
 	
 	self assert: (model containmentSelectors isMemberOf: OrderedCollection).
 	self assert: model containmentSelectors size equals: 2.
@@ -87,6 +85,7 @@ CAKModelBuilderTests >> testCreateAssociationRelations [
 	cakFakeContainer fakeContainment add: fakeTarget2.
 	
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
+	builder cacheEntities.
 	
 	builder defineAssociationSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
@@ -110,6 +109,7 @@ CAKModelBuilderTests >> testCreateContainmentRelations [
 	cakFakeContainer fakeContainment add: fakeTarget2.
 	
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
+	builder cacheEntities.
 	
 	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
@@ -150,6 +150,62 @@ CAKModelBuilderTests >> testDefineContainerSelectorFromTo [
 	self assert: builder containmentSelectors first first equals: #aClassName.
 	self assert: builder containmentSelectors first second equals: #anotherClassName.
 	self assert: builder containmentSelectors first third equals: #aSelector.
+	
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testFindCakEntityFor [
+	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
+
+	builder := CAKModelBuilder new.
+	cakContainer := CAKFakeContainerObject new.
+	cakContent1 := CAKFakeContentObject new.
+	cakContent2 := CAKFakeContentObject new.
+	cakFakObj1 := CAKFakeObject new.
+	cakFakObj2 := CAKFakeObject new.
+
+	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2 with: cakFakObj1 with: cakFakObj2).
+	
+	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+			
+	self deny: (builder consistencyCheck: builder identifyTypes).
+	
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testFindCakEntityForFail [
+	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations result |
+	
+	builder := CAKModelBuilder new.
+	cakFakeContainer := CAKFakeContainerObject new.
+	fakeTarget1 := CAKFakeContentObject new.
+	fakeTarget2 := CAKFakeContentObject new.
+	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1).
+	builder cacheEntities.
+	
+	result := builder findCakEntityFor: fakeTarget2.
+
+	self assert: (result isMemberOf: OrderedCollection). 
+	self assert: result size = 0.
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testFindCakEntityForSuccess [
+	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations result |
+	
+	builder := CAKModelBuilder new.
+	cakFakeContainer := CAKFakeContainerObject new.
+	fakeTarget1 := CAKFakeContentObject new.
+	fakeTarget2 := CAKFakeContentObject new.
+	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
+	builder cacheEntities.
+	
+	result := builder findCakEntityFor: fakeTarget2.
+
+	self assert: (result isMemberOf: OrderedCollection). 
+	self assert: result size = 1.
+	self assert: (result first isMemberOf: CAKEntity).
+	self assert: result first model equals: fakeTarget2.
 	
 ]
 
@@ -213,6 +269,7 @@ CAKModelBuilderTests >> testInferAssociationsOn [
 	"self assert: (builder consistencyCheck: types)."
 	
 	self assert: builder model allAssociations size equals: 0.
+	builder cacheEntities.
 	
 	builder createContainmentRelations: types.
 	builder createAssociationRelations: types.
