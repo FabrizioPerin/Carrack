@@ -57,8 +57,9 @@ ConfigurationOfCarrack >> default: spec [
 			package: 'Carrack-Model';
 			
 			"Tests"
+			package: 'Carrack-Tests-Resources';
 			package: 'Carrack-Tests-Model' with: [
-				spec requires: 'Carrack-Model'].
+				spec requires: #('Carrack-Model' 'Carrack-Tests-Resources').].
 			
 		spec group: 'Tests' with: #( 
 			'Carrack-Tests-Model') ]
