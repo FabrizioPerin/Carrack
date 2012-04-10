@@ -67,6 +67,36 @@ CAKAssociationTests >> testFrom [
 ]
 
 { #category : #accessing }
+CAKAssociationTests >> testIndirectAssociationSource [
+	| assoc entity |
+
+	assoc := CAKAssociation new.
+	entity := CAKEntity new.
+
+	self assert: assoc associationSource equals: nil.	
+	
+	entity addOutgoingAssociation: assoc.
+	
+	self assert: assoc associationSource equals: entity.
+
+]
+
+{ #category : #accessing }
+CAKAssociationTests >> testIndirectAssociationTarget [
+	| assoc entity |
+
+	assoc := CAKAssociation new.
+	entity := CAKEntity new.
+
+	self assert: assoc associationTarget equals: nil.	
+	
+	entity addIncomingAssociation: assoc.
+	
+	self assert: assoc associationTarget equals: entity.
+
+]
+
+{ #category : #accessing }
 CAKAssociationTests >> testTo [
 	| assoc entity |
 

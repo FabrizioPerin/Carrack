@@ -67,6 +67,36 @@ CAKContainmentTests >> testFrom [
 ]
 
 { #category : #accessing }
+CAKContainmentTests >> testIndirectContainer [
+	| containment entity |
+
+	containment := CAKContainment new.
+	entity := CAKEntity new.
+
+	self assert: containment container equals: nil.	
+	
+	entity addContainedEntity: containment.
+	
+	self assert: containment container equals: entity.
+
+]
+
+{ #category : #accessing }
+CAKContainmentTests >> testIndirectContent [
+	| containment entity |
+
+	containment := CAKContainment new.
+	entity := CAKEntity new.
+
+	self assert: containment content equals: nil.	
+	
+	entity addContainerEntity: containment.
+	
+	self assert: containment content equals: entity.
+
+]
+
+{ #category : #accessing }
 CAKContainmentTests >> testTo [
 	| containment entity |
 

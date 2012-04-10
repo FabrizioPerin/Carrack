@@ -5,29 +5,49 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-CAKEntityTests >> testContainedEntities [
-	| entity containment |
+CAKEntityTests >> testContainerEntitiesWithTarget [
+	| entity containment targetEntity |
 	
 	entity := CAKEntity new.
+	targetEntity := CAKEntity new.
 	containment := CAKContainment new.
-	
-	self assert: (entity isMemberOf: CAKEntity).
- 
-	self assert: (entity containedEntities isMemberOf: FMMultivalueLink). 
-	self assert: entity containedEntities size equals: 0.
+	 
+	self assert: (entity containerEntities isMemberOf: OrderedCollection). 
+	self assert: entity containerEntities size equals: 0.
 
-	entity addContainedEntity: containment.
+	entity addContainerEntity: containment.
+	containment container: targetEntity.
 
-	self assert: (entity containedEntities isMemberOf: FMMultivalueLink). 
-	self assert: entity containedEntities size equals: 1.
-	self assert: entity containedEntities first equals: containment.
+	self assert: (entity containerEntities isMemberOf: OrderedCollection). 
+	self assert: entity containerEntities size equals: 1.
+	self assert: entity containerEntities first equals: targetEntity.
 	
 	
 	
 ]
 
 { #category : #'as yet unclassified' }
-CAKEntityTests >> testContainerEntities [
+CAKEntityTests >> testContainerEntitiesWithoutTarget [
+	| entity containment targetEntity |
+	
+	entity := CAKEntity new.
+	containment := CAKContainment new.
+	 
+	self assert: (entity containerEntities isMemberOf: OrderedCollection). 
+	self assert: entity containerEntities size equals: 0.
+
+	entity addContainerEntity: containment.
+	
+	self assert: (entity containers isMemberOf: FMMultivalueLink).
+	self assert: entity containers size equals: 1.
+	self assert: (entity containerEntities isMemberOf: OrderedCollection). 
+	self assert: entity containerEntities size equals: 0.
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
+CAKEntityTests >> testContainers [
 	| entity containment |
 	
 	entity := CAKEntity new.
@@ -35,14 +55,36 @@ CAKEntityTests >> testContainerEntities [
 	
 	self assert: (entity isMemberOf: CAKEntity).
  
-	self assert: (entity containerEntities isMemberOf: FMMultivalueLink). 
-	self assert: entity containerEntities size equals: 0.
+	self assert: (entity containers isMemberOf: FMMultivalueLink). 
+	self assert: entity containers size equals: 0.
 
 	entity addContainerEntity: containment.
 
-	self assert: (entity containerEntities isMemberOf: FMMultivalueLink). 
-	self assert: entity containerEntities size equals: 1.
-	self assert: entity containerEntities first equals: containment.
+	self assert: (entity containers isMemberOf: FMMultivalueLink). 
+	self assert: entity containers size equals: 1.
+	self assert: entity containers first equals: containment.
+	
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
+CAKEntityTests >> testContents [
+	| entity containment |
+	
+	entity := CAKEntity new.
+	containment := CAKContainment new.
+	
+	self assert: (entity isMemberOf: CAKEntity).
+ 
+	self assert: (entity contents isMemberOf: FMMultivalueLink). 
+	self assert: entity contents size equals: 0.
+
+	entity addContainedEntity: containment.
+
+	self assert: (entity contents isMemberOf: FMMultivalueLink). 
+	self assert: entity contents size equals: 1.
+	self assert: entity contents first equals: containment.
 	
 	
 	
@@ -61,10 +103,53 @@ CAKEntityTests >> testEntityCreation [
 	self assert: (entity incomingAssociations isMemberOf: FMMultivalueLink).
 	self assert: entity incomingAssociations size equals: 0.
 
-	self assert: (entity containerEntities isMemberOf: FMMultivalueLink). 
-	self assert: entity containerEntities size equals: 0.
-	self assert: (entity containedEntities isMemberOf: FMMultivalueLink).
-	self assert: entity containedEntities size equals: 0.
+	self assert: (entity containers isMemberOf: FMMultivalueLink). 
+	self assert: entity containers size equals: 0.
+	self assert: (entity contents isMemberOf: FMMultivalueLink).
+	self assert: entity contents size equals: 0.
+]
+
+{ #category : #'as yet unclassified' }
+CAKEntityTests >> testIncomingAssociationEntitiesWithTarget [
+	| entity association targetEntity |
+	
+	entity := CAKEntity new.
+	association := CAKAssociation new.
+	targetEntity := CAKEntity new.
+	
+	self assert: (entity isMemberOf: CAKEntity).
+ 
+	self assert: (entity incomingAssociationEntities isMemberOf: OrderedCollection). 
+	self assert: entity incomingAssociationEntities size equals: 0.
+
+	entity addIncomingAssociation: association.
+	association associationSource: targetEntity. 
+
+	self assert: (entity incomingAssociations isMemberOf: FMMultivalueLink). 
+	self assert: entity incomingAssociations size equals: 1.
+	self assert: (entity incomingAssociationEntities isMemberOf: OrderedCollection).
+	self assert: entity incomingAssociationEntities size equals: 1.
+	self assert: entity incomingAssociationEntities first equals: targetEntity.
+]
+
+{ #category : #'as yet unclassified' }
+CAKEntityTests >> testIncomingAssociationEntitiesWithoutTarget [
+	| entity association |
+	
+	entity := CAKEntity new.
+	association := CAKAssociation new.
+	
+	self assert: (entity isMemberOf: CAKEntity).
+ 
+	self assert: (entity incomingAssociationEntities isMemberOf: OrderedCollection). 
+	self assert: entity incomingAssociationEntities size equals: 0.
+
+	entity addIncomingAssociation: association.
+
+	self assert: (entity incomingAssociations isMemberOf: FMMultivalueLink). 
+	self assert: entity incomingAssociations size equals: 1.
+	self assert: (entity incomingAssociationEntities isMemberOf: OrderedCollection).
+	self assert: entity incomingAssociationEntities size equals: 0.
 ]
 
 { #category : #'as yet unclassified' }
