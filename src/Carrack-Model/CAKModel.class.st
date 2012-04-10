@@ -4,7 +4,7 @@ Class {
 	#category : #'Carrack-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #meta }
 CAKModel class >> annotation [
 	<MSEClass: #CAKModel super: #MooseAbstractGroup>
 	<package: #'Carrack-Model'>
@@ -30,8 +30,21 @@ CAKModel >> allEntities [
 ]
 
 { #category : #accessing }
-CAKModel >> allGroups [
-	^self allWithType: CAKEntityGroup.
+CAKModel >> allEntitiesByType [
+	<navigation: 'allEntiesWithType'>
+	| types result |
+	types := self identifyTypes.
+
+	result := CAKEntityGroupGroup withDescription: 'entities by type'.
+	
+	types keysAndValuesDo: [:key :value |
+		| group |
+		group := value asMooseGroup.
+		group type: key.
+		result add: group].
+	self halt.
+	
+	^ result
 ]
 
 { #category : #accessing }
@@ -51,5 +64,26 @@ CAKModel >> cacheGroups [
 
 { #category : #accessing }
 CAKModel >> entitiesOfType: aSymbol [
-	^self allGroups detect: [:group | group type = aSymbol] ifNone: [CAKEntityGroup new]
+	| res |
+	res := self allEntities select: [:entity | entity model class name = aSymbol ].
+	res isEmpty ifFalse: [
+		res := res asMooseGroup.
+		res type: res first model class name ].
+
+	^res
+]
+
+{ #category : #accessing }
+CAKModel >> identifyTypes [
+	| types |
+	
+	types := Dictionary new.
+	
+	self allEntities do: [ :cakEl | 
+		types 
+			at: cakEl model class name
+			ifPresent: [:value | value add: cakEl] 
+			ifAbsent: [types at: cakEl model class name put: (OrderedCollection with: cakEl) ] ].
+	
+	^ types
 ]

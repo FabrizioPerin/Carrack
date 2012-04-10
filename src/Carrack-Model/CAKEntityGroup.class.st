@@ -9,6 +9,13 @@ Class {
 	#category : #'Carrack-Model'
 }
 
+{ #category : #meta }
+CAKEntityGroup class >> annotation [
+	<MSEClass: #CAKEntityGroup super: #MooseGroup>
+	<package: #'Carrack-Model'>
+	^self
+]
+
 { #category : #accessing }
 CAKEntityGroup >> isLeaf [
 	^ isLeaf
@@ -31,6 +38,8 @@ CAKEntityGroup >> isRoot: aBoolean [
 
 { #category : #accessing }
 CAKEntityGroup >> type [
+	<MSEProperty: #type type: #String>
+	<MSEComment: 'Type of the elements contained into this group'>
 	^ type
 ]
 
