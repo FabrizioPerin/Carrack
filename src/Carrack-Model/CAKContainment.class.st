@@ -17,7 +17,7 @@ CAKContainment class >> annotation [
 
 { #category : #'as yet unclassified' }
 CAKContainment >> container [
-	<MSEProperty: #container type: #CAKEntity opposite: #containedEntities>
+	<MSEProperty: #container type: #CAKEntity opposite: #contents>
 	<MSEComment: 'Carrack entity contains another carrack entity.'>
 	
 	^container
@@ -28,14 +28,14 @@ CAKContainment >> container: aCarrackEntity [
 	
 	container := FMMultivalueLink
 					on: self
-					update: #containedEntities
+					update: #contents
 					from: self container
 					to: aCarrackEntity
 ]
 
 { #category : #'as yet unclassified' }
 CAKContainment >> content [
-	<MSEProperty: #content type: #CAKEntity opposite: #containerEntities>
+	<MSEProperty: #content type: #CAKEntity opposite: #containers>
 	<MSEComment: 'Carrack entity that is contained in another carrack entity.'>
 	
 	^content
@@ -46,7 +46,7 @@ CAKContainment >> content: aCarrackEntity [
 
 	content := FMMultivalueLink 
 					on: self
-					update: #containerEntities
+					update: #containers
 					from: self content  
 					to: aCarrackEntity
 ]

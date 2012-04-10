@@ -62,6 +62,7 @@ CAKModelBuilder >> create [
 	
 	types := self identifyTypes.
 	self cacheEntities.
+	self createGroups: types.
 	"(self consistencyCheck: types)
 		ifTrue: [ "
 			self createContainmentRelations: types.
@@ -70,8 +71,9 @@ CAKModelBuilder >> create [
 			self createAssociationRelations: types.
 			Transcript show: 'Association DONE.' , String cr.
 			Transcript show: DateAndTime now asTimeStamp asString , String cr.
-			self halt.
-			self inferAssociationRelations
+			self inferAssociationRelations.
+			Transcript show: 'Infer associations DONE.' , String cr.
+			Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	"]"
 ]
 
@@ -224,8 +226,8 @@ CAKModelBuilder >> inferAssociationRelationsOn: aCollectionOfAssociations [
 	aCollectionOfAssociations
 		do: [ :association | 
 			| sourceContainers targetContainers |
-			sourceContainers := association associationSource containerEntities.
-			targetContainers := association associationTarget containerEntities.
+			sourceContainers := association associationSource containers.
+			targetContainers := association associationTarget containers.
 			sourceContainers
 				do: [ :sourceContainer | 
 					targetContainers

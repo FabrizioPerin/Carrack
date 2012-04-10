@@ -19,12 +19,12 @@ CAKEntity class >> annotation [
 
 { #category : #accessing }
 CAKEntity >> addContainedEntity: aCAKContainment [
-	self containedEntities add: aCAKContainment
+	self contents add: aCAKContainment
 ]
 
 { #category : #accessing }
 CAKEntity >> addContainerEntity: aCAKContainment [
-	self containerEntities add: aCAKContainment
+	self containers add: aCAKContainment
 ]
 
 { #category : #accessing }
@@ -39,16 +39,65 @@ CAKEntity >> addOutgoingAssociation: aCAKAssociation [
 
 { #category : #accessing }
 CAKEntity >> containedEntities [
-	^ containedEntities
+	| res |
+
+	res := OrderedCollection new.
+
+	self contents
+		do: [ :each | 
+			each to isNil
+				ifFalse: [ res add: each to ] ].
+
+	^ res
 ]
 
 { #category : #accessing }
 CAKEntity >> containerEntities [
+	| res |
+
+	res := OrderedCollection new.
+
+	self containers
+		do: [ :each | 
+			each from isNil
+				ifFalse: [ res add: each from ] ].
+
+	^ res
+
+]
+
+{ #category : #accessing }
+CAKEntity >> containers [
+	<MSEProperty: #containers type: #CAKContainment opposite: #content> <multivalued>  <derived>
+	<MSEComment: 'Containment relationship'>
 	^ containerEntities
 ]
 
 { #category : #accessing }
+CAKEntity >> contents [
+	<MSEProperty: #contents type: #CAKContainment opposite: #container> <multivalued>  <derived>
+	<MSEComment: 'Containment relationship'>
+	^ containedEntities
+]
+
+{ #category : #accessing }
+CAKEntity >> incomingAssociationEntities [
+	| res |
+
+	res := OrderedCollection new.
+
+	self incomingAssociations
+		do: [ :each | 
+			each from isNil
+				ifFalse: [ res add: each from ] ].
+
+	^ res	
+]
+
+{ #category : #accessing }
 CAKEntity >> incomingAssociations [
+	<MSEProperty: #incomingAssociations type: #CAKAssociation opposite: #associationTarget>
+	<MSEComment: 'Association relationship'>
 	^ incomingAssociations
 ]
 
@@ -70,7 +119,23 @@ CAKEntity >> originalPrintOn: aStream [
 ]
 
 { #category : #accessing }
+CAKEntity >> outgoingAssociationEntities [
+	| res |
+
+	res := OrderedCollection new.
+
+	self outgoingAssociations
+		do: [ :each | 
+			each to isNil
+				ifFalse: [ res add: each to ] ].
+
+	^ res	
+]
+
+{ #category : #accessing }
 CAKEntity >> outgoingAssociations [
+	<MSEProperty: #outgoingAssociations type: #CAKAssociation opposite: #associationSource>
+	<MSEComment: 'Association relationship'>
 	^ outgoingAssociations
 ]
 
