@@ -113,6 +113,16 @@ CAKEntity >> initialize [
 	^self 
 ]
 
+{ #category : #accessing }
+CAKEntity >> internalOutgoingAssociationEntities [
+	^self internalOutgoingAssociations collect: [:each | each associationTarget ]
+]
+
+{ #category : #accessing }
+CAKEntity >> internalOutgoingAssociations [
+	^self outgoingAssociations select: [:each | each associationTarget containerEntities includes: self ].
+]
+
 { #category : #printing }
 CAKEntity >> originalPrintOn: aStream [
 	super printOn: aStream

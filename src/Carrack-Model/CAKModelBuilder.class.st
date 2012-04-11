@@ -17,8 +17,8 @@ CAKModelBuilder >> associationSelectors [
 ]
 
 { #category : #accessing }
-CAKModelBuilder >> associationSelectors: anObject [
-	associationSelectors := anObject
+CAKModelBuilder >> associationSelectors: aCollection [
+	associationSelectors := aCollection
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ CAKModelBuilder >> containmentSelectors: anObject [
 	containmentSelectors := anObject
 ]
 
-{ #category : #tokens }
+{ #category : #'as yet unclassified' }
 CAKModelBuilder >> create [
 	| types |
 	
@@ -84,7 +84,7 @@ CAKModelBuilder >> createAssociationRelations: aDictionary [
 			(aDictionary at: vector first)
 				do: [ :value | 
 					|  values |
-					values := value model perform: vector third.
+					values := vector third value: value model.
 					values
 						do: [ :each | 
 							| result assocModel |
@@ -115,7 +115,7 @@ CAKModelBuilder >> createContainmentRelations: aDictionary [
 			(aDictionary at: vector first)
 				do: [ :value | 
 					|  values |
-					values := value model perform: vector third.
+					values := vector third value: value model.
 					values
 						do: [ :each | 
 							| result assocModel |
@@ -152,17 +152,17 @@ CAKModelBuilder >> createGroups: aDictionary [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilder >> defineAssociationSelector: aSelector from: aClassName to: anotherClassName [
+CAKModelBuilder >> defineAssociation: aSelectorOrBlock from: aClassName to: anotherClassName [
 
-	self associationSelectors add: (OrderedCollection with: aClassName with: anotherClassName with: aSelector). 
+	self associationSelectors add: (OrderedCollection with: aClassName with: anotherClassName with: aSelectorOrBlock). 
 
 
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilder >> defineContainementSelector: aSelector from: aClassName to: anotherClassName [
+CAKModelBuilder >> defineContainement: aSelectorOrBlock from: aClassName to: anotherClassName [
 
-	self containmentSelectors add: (OrderedCollection with: aClassName with: anotherClassName with: aSelector). 
+	self containmentSelectors add: (OrderedCollection with: aClassName with: anotherClassName with: aSelectorOrBlock). 
 
 
 ]
@@ -193,7 +193,7 @@ CAKModelBuilder >> findCakEntityFor: anObject [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CAKModelBuilder >> identifyTypes [
 	| types |
 	

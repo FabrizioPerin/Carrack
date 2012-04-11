@@ -42,9 +42,20 @@ CAKModel >> allEntitiesByType [
 		group := value asMooseGroup.
 		group type: key.
 		result add: group].
-	self halt.
+	MooseModel resetMeta.
 	
 	^ result
+]
+
+{ #category : #accessing }
+CAKModel >> allEntitiesOfType: aSymbol [
+	| res |
+	res := self allEntities select: [:entity | entity model class name = aSymbol ].
+	res isEmpty ifFalse: [
+		res := res asMooseGroup.
+		res type: res first model class name ].
+
+	^res
 ]
 
 { #category : #accessing }
@@ -63,17 +74,6 @@ CAKModel >> cacheGroups [
 ]
 
 { #category : #accessing }
-CAKModel >> entitiesOfType: aSymbol [
-	| res |
-	res := self allEntities select: [:entity | entity model class name = aSymbol ].
-	res isEmpty ifFalse: [
-		res := res asMooseGroup.
-		res type: res first model class name ].
-
-	^res
-]
-
-{ #category : #accessing }
 CAKModel >> identifyTypes [
 	| types |
 	
@@ -86,4 +86,19 @@ CAKModel >> identifyTypes [
 			ifAbsent: [types at: cakEl model class name put: (OrderedCollection with: cakEl) ] ].
 	
 	^ types
+]
+
+{ #category : #accessing }
+CAKModel >> viewDSMExample3 [
+
+| dSMMatrix view model |
+view := MOViewRenderer new.
+model := self allEntitiesOfType: #FAMIXClass.
+self halt.
+dSMMatrix := DSMMatrix withNodes: model edges: model allOutgoingAssociations from:#to to: #from.
+
+ColoredDSM new 
+		open: dSMMatrix
+		on: view.
+view open
 ]

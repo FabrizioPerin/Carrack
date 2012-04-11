@@ -17,6 +17,16 @@ CAKEntityGroup class >> annotation [
 ]
 
 { #category : #accessing }
+CAKEntityGroup >> allContainmentRelations [
+	^self flatCollect: [:each | each contents].
+]
+
+{ #category : #accessing }
+CAKEntityGroup >> allOutgoingAssociations [
+	^self flatCollect: [:each | each outgoingAssociations].
+]
+
+{ #category : #accessing }
 CAKEntityGroup >> isLeaf [
 	^ isLeaf
 ]
@@ -37,9 +47,17 @@ CAKEntityGroup >> isRoot: aBoolean [
 ]
 
 { #category : #accessing }
+CAKEntityGroup >> mooseDisplayStringOn: aStream [
+	self description: 'Group of ', self type asString.
+	super mooseDisplayStringOn: aStream
+]
+
+{ #category : #accessing }
 CAKEntityGroup >> type [
 	<MSEProperty: #type type: #String>
 	<MSEComment: 'Type of the elements contained into this group'>
+	(type isNil and: [self isEmpty not])
+		ifTrue: [self type: self first class name].
 	^ type
 ]
 
