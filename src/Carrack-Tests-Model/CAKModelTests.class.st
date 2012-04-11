@@ -17,10 +17,10 @@ CAKModelTests >> testEntitiesOfType [
 
 	builder nodes: (OrderedCollection with: cak with: cak1 with: cak2 with: cakContent1 with: cakContent).
 	
-	self assert: ((builder model entitiesOfType: #CAKFakeContentObject) isMemberOf: CAKEntityGroup).
-	self assert: (builder model entitiesOfType: #CAKFakeContentObject) size equals: 2.
-	self assert: ((builder model entitiesOfType: #CAKFakeObject) isMemberOf: CAKEntityGroup).
-	self assert: (builder model entitiesOfType: #CAKFakeObject) size equals: 3.
+	self assert: ((builder model allEntitiesOfType: #CAKFakeContentObject) isMemberOf: CAKEntityGroup).
+	self assert: (builder model allEntitiesOfType: #CAKFakeContentObject) size equals: 2.
+	self assert: ((builder model allEntitiesOfType: #CAKFakeObject) isMemberOf: CAKEntityGroup).
+	self assert: (builder model allEntitiesOfType: #CAKFakeObject) size equals: 3.
 ]
 
 { #category : #'as yet unclassified' }

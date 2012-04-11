@@ -33,7 +33,7 @@ CAKModelBuilderTests >> testConsistencyCheck [
 
 	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2).
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 			
 	self assert: (builder consistencyCheck: builder identifyTypes).
 ]
@@ -51,7 +51,7 @@ CAKModelBuilderTests >> testConsistencyCheckDeny [
 
 	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2 with: cakFakObj1 with: cakFakObj2).
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 			
 	self deny: (builder consistencyCheck: builder identifyTypes).
 ]
@@ -87,7 +87,7 @@ CAKModelBuilderTests >> testCreateAssociationRelations [
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
 	builder cacheEntities.
 	
-	builder defineAssociationSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineAssociation: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
 	containmentRelations := builder createAssociationRelations: builder identifyTypes.
 	
@@ -111,7 +111,7 @@ CAKModelBuilderTests >> testCreateContainmentRelations [
 	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
 	builder cacheEntities.
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	
 	containmentRelations := builder createContainmentRelations: builder identifyTypes.
 	
@@ -129,7 +129,7 @@ CAKModelBuilderTests >> testDefineAssociationSelectorFromTo [
 	
 	builder := CAKModelBuilder new.
 	
-	builder defineAssociationSelector: #aSelector from: #aClassName to: #anotherClassName.
+	builder defineAssociation: #aSelector from: #aClassName to: #anotherClassName.
 	
 	self assert: builder associationSelectors size equals: 1.
 	self assert: builder associationSelectors first first equals: #aClassName.
@@ -144,7 +144,7 @@ CAKModelBuilderTests >> testDefineContainerSelectorFromTo [
 	
 	builder := CAKModelBuilder new.
 	
-	builder defineContainementSelector: #aSelector from: #aClassName to: #anotherClassName.
+	builder defineContainement: #aSelector from: #aClassName to: #anotherClassName.
 	
 	self assert: builder containmentSelectors size equals: 1.
 	self assert: builder containmentSelectors first first equals: #aClassName.
@@ -166,7 +166,7 @@ CAKModelBuilderTests >> testFindCakEntityFor [
 
 	builder nodes: (OrderedCollection with: cakContainer with: cakContent1 with: cakContent2 with: cakFakObj1 with: cakFakObj2).
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 			
 	self deny: (builder consistencyCheck: builder identifyTypes).
 	
@@ -261,8 +261,8 @@ CAKModelBuilderTests >> testInferAssociationsOn [
 	
 	builder nodes: (OrderedCollection with: cakContainer1 with: cakContent1 with: cakContent2 with: cakContainer2 with: cakFakObj1 with: cakFakObj2).
 	
-	builder defineContainementSelector: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
-	builder defineAssociationSelector: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineAssociation: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeObject.
 	
 	types := builder identifyTypes.
 	
