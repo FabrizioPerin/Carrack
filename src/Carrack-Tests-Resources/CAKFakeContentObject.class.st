@@ -1,6 +1,6 @@
 Class {
 	#name : #CAKFakeContentObject,
-	#superclass : #Object,
+	#superclass : #CAKFakeObject,
 	#instVars : [
 		'fakeAssociation'
 	],

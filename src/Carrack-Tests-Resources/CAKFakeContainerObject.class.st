@@ -1,6 +1,6 @@
 Class {
 	#name : #CAKFakeContainerObject,
-	#superclass : #Object,
+	#superclass : #CAKFakeObject,
 	#instVars : [
 		'fakeContainment'
 	],
