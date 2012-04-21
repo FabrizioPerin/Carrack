@@ -33,25 +33,7 @@ CAKExperiments >> viewDSMExampleOnCarrack [
 	| model view dSMMatrix cakentities |
 	
 	model := FakeModelProvider new cakModelOnModel1. 
-self halt.
-	view := MOViewRenderer new.
-	dSMMatrix := DSMMatrix
-		withNodes: (model allEntitiesOfType: #CAKFakeContainerObject)
-		edges: (model allEntitiesOfType: #CAKFakeContainerObject) allOutgoingAssociations 
-		from: #associationSource
-		to: #associationTarget.
-	ColoredDSM new open: dSMMatrix on: view.
-	
-	view open
-]
 
-{ #category : #'as yet unclassified' }
-CAKExperiments >> viewDSMExampleOnFlatModel [
-	"self new viewDSMExampleOnCarrack"
-	| model view dSMMatrix cakentities |
-	
-	model := FakeModelProvider new cakModelOnModel1. 
-self halt.
 	view := MOViewRenderer new.
 	dSMMatrix := DSMMatrix
 		withNodes: (model allEntitiesOfType: #CAKFakeContainerObject)
