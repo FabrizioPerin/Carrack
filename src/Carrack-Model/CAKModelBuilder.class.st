@@ -91,7 +91,7 @@ CAKModelBuilder >> createAssociationRelations: aDictionary [
 							each isFamixAssociation
 								ifTrue: [ 
 									each to isCollection
-									ifTrue: [	result := self findCakEntitiesFor: each to]
+									ifTrue: [ result := self findCakEntitiesFor: each to]
 									ifFalse: [result := self findCakEntityFor: each to].									
 									assocModel := each ]
 								ifFalse: [ 
@@ -221,8 +221,10 @@ CAKModelBuilder >> inferAssociationRelations [
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> inferAssociationRelationsOn: aCollectionOfAssociations [
 	| associations result assocToCreate |
+	
 	result := OrderedCollection new.
 	assocToCreate := Dictionary new.
+	
 	aCollectionOfAssociations
 		do: [ :association | 
 			| sourceContainers targetContainers |
@@ -236,8 +238,8 @@ CAKModelBuilder >> inferAssociationRelationsOn: aCollectionOfAssociations [
 								at: sourceContainer container -> targetContainer container
 								ifPresent: [ :value | value add: association ]
 								ifAbsent: [ assocToCreate at: sourceContainer container -> targetContainer container put: (OrderedCollection with: association) ] ] ] ].
-	
-	self instanciateAssociationFrom: assocToCreate.
+
+	result := self instanciateAssociationFrom: assocToCreate.
 	
 	^ result
 ]
@@ -300,6 +302,7 @@ CAKModelBuilder >> nodes: aCollection [
 		collect: [ :anEntity | 
 			| cakEntity |
 			cakEntity := CAKEntity new.
+			cakEntity entityName: anEntity name.
 			cakEntity model: anEntity.
 			self model add: cakEntity.
 			cakEntity ].

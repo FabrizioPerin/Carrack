@@ -2,6 +2,7 @@ Class {
 	#name : #CAKEntity,
 	#superclass : #CAKAbstractEntity,
 	#instVars : [
+		'entityName',
 		'outgoingAssociations',
 		'containedEntities',
 		'containerEntities',
@@ -81,6 +82,16 @@ CAKEntity >> contents [
 ]
 
 { #category : #accessing }
+CAKEntity >> entityName [
+	^entityName
+]
+
+{ #category : #accessing }
+CAKEntity >> entityName: aStringOrSymbol [
+	^entityName := aStringOrSymbol
+]
+
+{ #category : #accessing }
 CAKEntity >> incomingAssociationEntities [
 	| res |
 
@@ -152,5 +163,6 @@ CAKEntity >> outgoingAssociations [
 { #category : #printing }
 CAKEntity >> printOn: aStream [
 	self originalPrintOn: aStream.
+	aStream nextPutAll: ' name: ', self entityName asString.
 	aStream nextPutAll: ' model: '; print: self model
 ]
