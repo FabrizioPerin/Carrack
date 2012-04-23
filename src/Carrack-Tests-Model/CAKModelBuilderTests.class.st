@@ -98,6 +98,28 @@ CAKModelBuilderTests >> testCreateAssociationRelations [
 ]
 
 { #category : #'as yet unclassified' }
+CAKModelBuilderTests >> testCreateAssociationRelationsOnTwoLevels [
+	| cakModel top1 top2 assocs interestingAssoc |
+	
+	cakModel := FakeModelProvider build cakModelOnModelWithTwoLevels. 
+	
+	top1 := (cakModel allEntities select: [:each | each entityName = #topContainer1]) first.
+	top2 := (cakModel allEntities select: [:each | each entityName = #topContainer2]) first.
+	
+	self assert: (top1 isMemberOf: CAKEntity).
+	self assert: (top2 isMemberOf: CAKEntity).
+	
+	assocs := cakModel allAssociations.
+	
+	interestingAssoc := assocs select: [:each | each associationSource = top1].
+	
+	self assert: (top1 outgoingAssociations isMemberOf: FMMultivalueLink). 
+	self assert: top1 outgoingAssociations size = 1.
+	self assert: (top1 outgoingAssociations first isMemberOf: CAKAssociation). 
+	self assert: top1 outgoingAssociations first to equals: top2.
+]
+
+{ #category : #'as yet unclassified' }
 CAKModelBuilderTests >> testCreateContainmentRelations [
 	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations |
 	

@@ -219,7 +219,7 @@ CAKEntityTests >> testPrintOn [
 	aStream := ReadWriteStream on: ''.
 	entity printOn: aStream.
 	
-	self assert: aStream contents equals: 'a CAKEntity #noname model: nil'.
+	self assert: aStream contents equals: 'a CAKEntity #noname name: nil model: nil'.
 
 	anObject := Object new.
 	aStream := ReadWriteStream on: ''.
@@ -227,5 +227,5 @@ CAKEntityTests >> testPrintOn [
 	entity model: anObject.
 	entity printOn: aStream.
 	
-	self assert: aStream contents equals: 'a CAKEntity #noname model: an Object'
+	self assert: aStream contents equals: 'a CAKEntity #noname name: nil model: an Object'
 ]
