@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+CAKFakeObject >> name [
+	^name
+]
+
+{ #category : #accessing }
 CAKFakeObject >> name: anObject [
 	name := anObject
 ]

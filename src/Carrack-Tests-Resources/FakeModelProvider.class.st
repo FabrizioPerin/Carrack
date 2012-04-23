@@ -5,12 +5,32 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-FakeModelProvider >> cakModelOnModel1 [
+FakeModelProvider class >> build [
+	^self new.
+]
+
+{ #category : #'as yet unclassified' }
+FakeModelProvider >> cakModelOnModelWithOneLevel [
 	
 	| builder |
 	builder := CAKModelBuilder new.
 
-	builder nodes: self model1.
+	builder nodes: self modelWithOneLevel.
+	
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineAssociation: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeContentObject.
+	
+	^builder create model
+]
+
+{ #category : #'as yet unclassified' }
+FakeModelProvider >> cakModelOnModelWithTwoLevels [
+	
+	| builder |
+	builder := CAKModelBuilder new.
+
+	builder nodes: self modelWithTwoLevels.
 	
 	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
 	builder defineAssociation: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeContentObject.
@@ -19,7 +39,20 @@ FakeModelProvider >> cakModelOnModel1 [
 ]
 
 { #category : #'as yet unclassified' }
-FakeModelProvider >> model1 [
+FakeModelProvider >> experimentingCakModelOnModel1 [
+	
+	| builder |
+	builder := CAKModelBuilder new.
+
+	builder nodes: #(1 2 3 4 5 6 7 8 9 10).
+	
+	builder defineAssociation: [:value | self halt ] from: #SmallInteger to: [:value | self halt ].
+	
+	^builder create model
+]
+
+{ #category : #'as yet unclassified' }
+FakeModelProvider >> modelWithOneLevel [
 	| c1 c2 c3 c4 c5 c6 c7 c8 model |
 
 	c1 := CAKFakeContainerObject new name: #Container1.
@@ -55,4 +88,22 @@ FakeModelProvider >> model1 [
 	model add: c8.
 	
 	^ model
+]
+
+{ #category : #'as yet unclassified' }
+FakeModelProvider >> modelWithTwoLevels [
+	| model c1 c2 |
+
+	model := FakeModelProvider build modelWithOneLevel.
+	
+	c1 := CAKFakeContainerObject new name: #topContainer1.
+	c2 := CAKFakeContainerObject new name: #topContainer2.
+	
+	c1 fakeContainment add: (model select: [:each | each name = #Container1]) first.
+	c2 fakeContainment add: (model select: [:each | each name = #Container3]) first.
+	
+	model add: c1.
+	model add: c2.	
+
+	^model
 ]
