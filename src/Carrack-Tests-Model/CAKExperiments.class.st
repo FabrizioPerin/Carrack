@@ -59,7 +59,7 @@ CAKExperiments >> viewDSMExampleOnCarrack [
 	"self new viewDSMExample3"
 	| model view dSMMatrix cakentities |
 	
-	model := FakeModelProvider new cakModelOnModelWithOneLevel. 
+	model := FakeModelProvider build cakModelOnModelWithOneLevel. 
 
 	view := MOViewRenderer new.
 	dSMMatrix := DSMMatrix
@@ -77,7 +77,7 @@ CAKExperiments >> viewDSMExampleWithArraysOnCarrack [
 	"self new viewDSMExample3"
 	| model view dSMMatrix cakentities |
 	
-	model := FakeModelProvider new cakModelOnModelWithOneLevel. 
+	model := FakeModelProvider build cakModelOnModelWithOneLevel. 
 
 	view := MOViewRenderer new.
 	dSMMatrix := DSMMatrix
