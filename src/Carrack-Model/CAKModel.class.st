@@ -90,15 +90,14 @@ CAKModel >> identifyTypes [
 
 { #category : #accessing }
 CAKModel >> viewDSMExample3 [
+	| dSMMatrix view model |
 
-| dSMMatrix view model |
-view := MOViewRenderer new.
-model := self allEntitiesOfType: #FAMIXClass.
-self halt.
-dSMMatrix := DSMMatrix withNodes: model edges: model allOutgoingAssociations from:#to to: #from.
+	view := MOViewRenderer new.
+	model := self allEntitiesOfType: #FAMIXClass.
+	dSMMatrix := DSMMatrix withNodes: model edges: model allOutgoingAssociations from:#to to: #from.
 
-ColoredDSM new 
-		open: dSMMatrix
-		on: view.
-view open
+	ColoredDSM new 
+			open: dSMMatrix
+			on: view.
+	view open
 ]
