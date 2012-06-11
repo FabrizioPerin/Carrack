@@ -44,8 +44,9 @@ ConfigurationOfCarrack >> default: spec [
 	spec
 		for: #common
 		do: [ 
-			spec blessing: #default.
+			spec blessing: #default. 
 			spec repository: 'http://www.squeaksource.com/Carrack'.
+			spec repository: (FileDirectory default pathName , FileDirectory pathNameDelimiter asString , 'package-cache').
 		"spec project: 'MooseJEE for Babel' with: [
 				spec
 					className: 'ConfigurationOfMooseJEE';
