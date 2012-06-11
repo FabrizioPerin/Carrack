@@ -7,6 +7,8 @@ Class {
 { #category : #'as yet unclassified' }
 CAKExperiments >> exp1 [
 	"Tried on ArgoUML"
+	"self new exp1"
+	
 	| builder |
 	Transcript open.
 	
@@ -45,6 +47,35 @@ CAKExperiments >> exp2 [
 	builder defineContainement: #methods from: #FAMIXClass to: #FAMIXMethod.
 	builder defineContainement: #classes from: #FAMIXNamespace to: #FAMIXClass.
 	builder defineAssociation: #outgoingInvocations from: #FAMIXMethod to: #FAMIXMethod.
+	
+	builder create.
+	
+	Transcript show: 'FINISH!' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	
+	^builder model.
+]
+
+{ #category : #'as yet unclassified' }
+CAKExperiments >> exp4 [
+	"Tried different ground dependecies on ArgoUML"
+	"self new exp4 install"
+	| builder |
+	Transcript open.
+	
+	builder := CAKModelBuilder new.
+	builder nodes: MooseModel root first allClasses.
+	builder nodes: MooseModel root first allMethods.
+	builder nodes: MooseModel root first allNamespaces.
+	builder nodes: MooseModel root first allAttributes.
+	
+	Transcript show: 'Nodes DONE.' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	
+	builder defineContainement: #methods from: #FAMIXClass to: #FAMIXMethod.
+	builder defineContainement: #classes from: #FAMIXNamespace to: #FAMIXClass.
+	builder defineContainement: #attributes from: #FAMIXClass to: #FAMIXAttribute.
+	builder defineAssociation: #accesses from: #FAMIXMethod to: #FAMIXAttribute.
 	
 	builder create.
 	
