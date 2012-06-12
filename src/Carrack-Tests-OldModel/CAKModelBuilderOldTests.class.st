@@ -1,11 +1,11 @@
 Class {
-	#name : #CAKModelBuilderTests,
+	#name : #CAKModelBuilderOldTests,
 	#superclass : #TestCase,
 	#category : #'Carrack-Tests-OldModel'
 }
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testAssociationSelectors [
+CAKModelBuilderOldTests >> testAssociationSelectors [
 	| model fake1|
 	
 	model := CAKModelBuilder new.
@@ -23,7 +23,7 @@ CAKModelBuilderTests >> testAssociationSelectors [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testConsistencyCheck [
+CAKModelBuilderOldTests >> testConsistencyCheck [
 	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
 
 	builder := CAKModelBuilder new.
@@ -39,7 +39,7 @@ CAKModelBuilderTests >> testConsistencyCheck [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testConsistencyCheckDeny [
+CAKModelBuilderOldTests >> testConsistencyCheckDeny [
 	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
 
 	builder := CAKModelBuilder new.
@@ -57,7 +57,7 @@ CAKModelBuilderTests >> testConsistencyCheckDeny [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testContainmentSelectors [
+CAKModelBuilderOldTests >> testContainmentSelectors [
 	| model containment1 containment2 |
 	
 	model := CAKModelBuilder new.
@@ -74,7 +74,7 @@ CAKModelBuilderTests >> testContainmentSelectors [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testCreateAssociationRelations [
+CAKModelBuilderOldTests >> testCreateAssociationRelations [
 	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations |
 	
 	builder := CAKModelBuilder new.
@@ -98,7 +98,7 @@ CAKModelBuilderTests >> testCreateAssociationRelations [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testCreateAssociationRelationsOnTwoLevels [
+CAKModelBuilderOldTests >> testCreateAssociationRelationsOnTwoLevels [
 	| cakModel top1 top2 assocs interestingAssoc |
 	
 	cakModel := FakeModelProvider build cakModelOnModelWithTwoLevels. 
@@ -120,7 +120,7 @@ CAKModelBuilderTests >> testCreateAssociationRelationsOnTwoLevels [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testCreateContainmentRelations [
+CAKModelBuilderOldTests >> testCreateContainmentRelations [
 	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations |
 	
 	builder := CAKModelBuilder new.
@@ -146,7 +146,7 @@ CAKModelBuilderTests >> testCreateContainmentRelations [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testDefineAssociationSelectorFromTo [
+CAKModelBuilderOldTests >> testDefineAssociationSelectorFromTo [
 	| builder |
 	
 	builder := CAKModelBuilder new.
@@ -161,7 +161,7 @@ CAKModelBuilderTests >> testDefineAssociationSelectorFromTo [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testDefineContainerSelectorFromTo [
+CAKModelBuilderOldTests >> testDefineContainerSelectorFromTo [
 	| builder |
 	
 	builder := CAKModelBuilder new.
@@ -176,7 +176,7 @@ CAKModelBuilderTests >> testDefineContainerSelectorFromTo [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testFindCakEntityFor [
+CAKModelBuilderOldTests >> testFindCakEntityFor [
 	| builder cakContainer cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
 
 	builder := CAKModelBuilder new.
@@ -195,7 +195,7 @@ CAKModelBuilderTests >> testFindCakEntityFor [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testFindCakEntityForFail [
+CAKModelBuilderOldTests >> testFindCakEntityForFail [
 	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations result |
 	
 	builder := CAKModelBuilder new.
@@ -212,7 +212,7 @@ CAKModelBuilderTests >> testFindCakEntityForFail [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testFindCakEntityForSuccess [
+CAKModelBuilderOldTests >> testFindCakEntityForSuccess [
 	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations result |
 	
 	builder := CAKModelBuilder new.
@@ -232,7 +232,7 @@ CAKModelBuilderTests >> testFindCakEntityForSuccess [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testIdentifyTypes [
+CAKModelBuilderOldTests >> testIdentifyTypes [
 	| builder anotherObject anObject collection smallinteger |
 
 	builder := CAKModelBuilder new.
@@ -263,7 +263,7 @@ CAKModelBuilderTests >> testIdentifyTypes [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testInferAssociationsOn [
+CAKModelBuilderOldTests >> testInferAssociationsOn [
 	| builder cakContainer1 cakContainer2 cakContent1 cakContent2 cakFakObj1 cakFakObj2 types |
 
 	builder := CAKModelBuilder new.
@@ -304,7 +304,7 @@ CAKModelBuilderTests >> testInferAssociationsOn [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testModelBuilderCreation [
+CAKModelBuilderOldTests >> testModelBuilderCreation [
 	| builder |
 
 	builder := CAKModelBuilder new.
@@ -318,7 +318,7 @@ CAKModelBuilderTests >> testModelBuilderCreation [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testNode [
+CAKModelBuilderOldTests >> testNode [
 	| builder anotherObject anObject |
 
 	builder := CAKModelBuilder new.
@@ -332,7 +332,7 @@ CAKModelBuilderTests >> testNode [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTests >> testNodes [
+CAKModelBuilderOldTests >> testNodes [
 	| builder anotherObject anObject |
 
 	builder := CAKModelBuilder new.
