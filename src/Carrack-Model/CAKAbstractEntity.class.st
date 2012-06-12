@@ -16,3 +16,8 @@ CAKAbstractEntity >> model [
 CAKAbstractEntity >> model: anObject [
 	model := anObject
 ]
+
+{ #category : #accessing }
+CAKAbstractEntity >> mooseDisplayStringOn: aStream [
+	self printOn: aStream
+]

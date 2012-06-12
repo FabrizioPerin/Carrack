@@ -69,14 +69,34 @@ CAKModelBuilderTryAgain >> create [
 { #category : #'as yet unclassified' }
 CAKModelBuilderTryAgain >> createAssociationRelations [
 	| result |
+	result := OrderedCollection new.
+
 	self associationDefinitions
-		do: [ :aCakAssociationDef |
-			| association |
-			association := CAKAssociation new.
-			association associationSource: ( self findCakEntityFor: ( aCakAssociationDef from value: aCakAssociationDef model ) ). 
-			association associationTarget: ( self findCakEntityFor: ( aCakAssociationDef to value: aCakAssociationDef model ) ).
-			association model: aCakAssociationDef model.
-			self model add: association ].
+		do: [ :aCakAssocDef |
+			| sourceModels sourceCakEntities targetModels targetCakEntities |
+			
+			sourceModels := aCakAssocDef from value: aCakAssocDef model.
+			sourceModels isCollection
+				ifTrue: [ sourceCakEntities := self findCakEntitiesFor: sourceModels ]
+				ifFalse: [ sourceCakEntities := self findCakEntityFor: sourceModels ].	
+			
+			targetModels := aCakAssocDef to value: aCakAssocDef model.
+			targetModels isCollection 
+				ifTrue: [ targetCakEntities := self findCakEntitiesFor: targetModels ]
+				ifFalse: [ targetCakEntities := self findCakEntityFor: targetModels ].
+
+			sourceCakEntities
+				do: [ :source |
+					targetCakEntities
+						do: [:target |
+							| association |
+							association := CAKAssociation new.
+							association associationSource: source.
+							association associationTarget: target.
+							association model: aCakAssocDef model.
+							result add: association.
+							self model add: association ] ] ].
+	^result
 ]
 
 { #category : #'as yet unclassified' }
@@ -85,13 +105,64 @@ CAKModelBuilderTryAgain >> createContainmentRelations [
 	result := OrderedCollection new.
 	self containmentDefinitions
 		do: [ :aCakContainmentDef |
-			| containment |
-			containment := CAKContainment new.
-			containment container: ( self findCakEntityFor: ( aCakContainmentDef from value: aCakContainmentDef model ) ). 
-			containment content: ( self findCakEntityFor: ( aCakContainmentDef to value: aCakContainmentDef model ) ).
-			containment model: aCakContainmentDef model.
-			result add: containment.
-			self model add: containment ].
+			| sourceModels sourceCakEntities targetModels targetCakEntities |
+			
+			sourceModels := aCakContainmentDef from value: aCakContainmentDef model.
+			sourceModels isCollection
+				ifTrue: [ sourceCakEntities := self findCakEntitiesFor: sourceModels ]
+				ifFalse: [ sourceCakEntities := self findCakEntityFor: sourceModels ].	
+			
+			targetModels := aCakContainmentDef to value: aCakContainmentDef model.
+			targetModels isCollection 
+				ifTrue: [ targetCakEntities := self findCakEntitiesFor: targetModels ]
+				ifFalse: [ targetCakEntities := self findCakEntityFor: targetModels ].
+			
+			sourceCakEntities
+				do: [ :source |
+					targetCakEntities
+						do: [:target |
+							| containment |
+							containment := CAKContainment new.
+							containment container: source.
+							containment content: target.
+							containment model: aCakContainmentDef model.
+							result add: containment.
+							self model add: containment ] ] ].
+	^result
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTryAgain >> createContainmentRelations2 [
+	| result |
+	result := OrderedCollection new.
+	self containmentDefinitions
+		do: [ :aCakContainmentDef |
+			| sourceModels sourceCakEntities targetModels targetCakEntities |
+			
+			sourceCakEntities := self findEntitiesFor: ( aCakContainmentDef from value: aCakContainmentDef model ). 
+			
+			sourceModels := 
+			sourceModels isCollection
+				ifTrue: [ sourceCakEntities := self findCakEntitiesFor: sourceModels ]
+				ifFalse: [ sourceCakEntities := self findCakEntityFor: sourceModels ].	
+			
+			targetModels := aCakContainmentDef to value: aCakContainmentDef model.
+			targetModels isCollection 
+				ifTrue: [ targetCakEntities := self findCakEntitiesFor: targetModels ]
+				ifFalse: [ targetCakEntities := self findCakEntityFor: targetModels ].
+			
+			sourceCakEntities
+				do: [ :source |
+					targetCakEntities
+						do: [:target |
+							| containment |
+							containment := CAKContainment new.
+							containment container: source.
+							containment content: target.
+							containment model: aCakContainmentDef model.
+							result add: containment.
+							self model add: containment ] ] ].
+	^result
 ]
 
 { #category : #'as yet unclassified' }
@@ -111,7 +182,10 @@ CAKModelBuilderTryAgain >> createGroups: aDictionary [
 { #category : #'as yet unclassified' }
 CAKModelBuilderTryAgain >> defineAssociationFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
 
-	self associationDefinitions add: (CAKAssociationDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock). 
+	aModel isCollection 
+		ifTrue: [aModel do: [:each |
+				self associationDefinitions add: (CAKAssociationDef on: each from: aSelectorOrBlock to: anotherSelectorOrBlock)]]
+		ifFalse: [self associationDefinitions add: (CAKAssociationDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock)]. 
 
 
 ]
@@ -126,7 +200,10 @@ CAKModelBuilderTryAgain >> defineAssociationsFrom: aSelectorOrBlock to: anotherS
 { #category : #'as yet unclassified' }
 CAKModelBuilderTryAgain >> defineContainmentFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
 
-	self containmentDefinitions add: (CAKContainmentDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock). 
+	aModel isCollection 
+		ifTrue: [aModel do: [:each |
+				self containmentDefinitions add: (CAKContainmentDef on: each from: aSelectorOrBlock to: anotherSelectorOrBlock)]]
+		ifFalse: [self containmentDefinitions add: (CAKContainmentDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock)]. 
 
 
 ]
@@ -162,6 +239,16 @@ CAKModelBuilderTryAgain >> findCakEntityFor: anObject [
 	
 	^OrderedCollection with: result
 	
+]
+
+{ #category : #'as yet unclassified' }
+CAKModelBuilderTryAgain >> findEntitiesFor: aCollectionOfModels [
+	| result |
+
+	aCollectionOfModels isCollection
+				ifTrue: [ result := self findCakEntitiesFor: aCollectionOfModels ]
+				ifFalse: [ result := self findCakEntityFor: aCollectionOfModels ].
+	^result
 ]
 
 { #category : #accessing }

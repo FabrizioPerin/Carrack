@@ -20,6 +20,13 @@ CAKAbstractAssociation >> from [
 ]
 
 { #category : #accessing }
+CAKAbstractAssociation >> mooseDisplayStringOn: aStream [
+	self from mooseDisplayStringOn: aStream.
+	aStream nextPutAll: ' -> '.
+	self to mooseDisplayStringOn: aStream	
+]
+
+{ #category : #accessing }
 CAKAbstractAssociation >> to [
 	<MSEProperty: #to type: #CAKEntity> <derived>
 	<MSEComment: 'Generic accessor to the entity target of the association. Refined by subclasses'>
