@@ -26,14 +26,16 @@ FakeModelProvider >> cakModelOnModelWithOneLevel [
 
 { #category : #'as yet unclassified' }
 FakeModelProvider >> cakModelOnModelWithTwoLevels [
+	| builder model |
 	
-	| builder |
 	builder := CAKModelBuilder new.
+	model := self modelWithTwoLevels.
 
-	builder nodes: self modelWithTwoLevels.
+	builder nodes: model.
 	
-	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
-	builder defineAssociation: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeContentObject.
+	builder defineContainmentFrom: #yourself to:  #fakeContainment on: ( model select: [:each | each isMemberOf: CAKFakeContainerObject]).
+	builder defineAssociationFrom: #yourself to:  #fakeAssociation on: ( model select: [:each | each isMemberOf: CAKFakeContentObject]).
+	
 	
 	^builder create model
 ]
