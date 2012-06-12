@@ -14,7 +14,7 @@ CAKExperimentsOnNewBuilder >> exp1 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: MooseModel root first allClasses.
 	builder nodes: MooseModel root first allMethods.
 	
@@ -42,7 +42,7 @@ CAKExperimentsOnNewBuilder >> exp2 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5 6 7 8 9 10 11 12).
 
 	builder create.
@@ -61,7 +61,7 @@ CAKExperimentsOnNewBuilder >> exp3 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5 6 7 8 9 10 11 12).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(1 3) . #(4 5) . #(4 6) . #(7 8) . #(8 9) . #(8 11) . #(9 10) . #(9 12)}. 
@@ -95,7 +95,7 @@ CAKExperimentsOnNewBuilder >> exp4 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5 6 7 8 9 10 11 12).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(1 3) . #(4 5) . #(4 6) . #(7 8) . #(8 9) . #(8 11) . #(9 10) . #(9 12)}.
@@ -130,7 +130,7 @@ CAKExperimentsOnNewBuilder >> exp5 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5 6 7 8 9 10 11 12).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(1 3) . #(4 5) . #(4 6) . #(7 8) . #(8 9) . #(8 11) . #(9 10) . #(9 12)}.
@@ -165,7 +165,7 @@ CAKExperimentsOnNewBuilder >> exp6 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5 6 7 8 9 10 11 12 13).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(1 3) . #(4 5) . #(4 6) . #(7 8) . #(8 9) . #(8 11) . #(9 10) . #(9 12) . #(13 4)}.
@@ -200,7 +200,7 @@ CAKExperimentsOnNewBuilder >> exp7 [
 	Transcript show: 'Starting.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder := CAKModelBuilderTryAgain new.
+	builder := CAKModelBuilder new.
 	builder nodes: #(1 2 3 4 5).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(4 3) . #(5 3)}.
