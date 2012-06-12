@@ -21,26 +21,6 @@ CAKModelBuilder >> cacheEntities [
 	entitiesCache := OrderedCollection withAll: self model allEntities
 ]
 
-{ #category : #'as yet unclassified' }
-CAKModelBuilder >> consistencyCheck: aDictionary [
-	| allKnownSelectors |
-
-	self containmentSelectors
-		do: [ :selectorVector | 
-			((aDictionary keys anySatisfy: [ :key | key = selectorVector first ])
-				and: [ aDictionary keys anySatisfy: [ :key | key = selectorVector second ] ])
-				ifFalse: [ ^ false ] ].
-	
-	allKnownSelectors := Set new.
-	allKnownSelectors
-		addAll:
-			(self containmentSelectors flatCollect: [ :each | OrderedCollection with: each first with: each second ]).
-	(allKnownSelectors size = aDictionary keys size)
-		ifFalse: [ ^ false ].
-		
-	^ true
-]
-
 { #category : #accessing }
 CAKModelBuilder >> containmentDefinitions [
 	^ containmentsDefinition
