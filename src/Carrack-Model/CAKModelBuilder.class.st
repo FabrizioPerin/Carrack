@@ -1,5 +1,5 @@
 Class {
-	#name : #CAKModelBuilderTryAgain,
+	#name : #CAKModelBuilder,
 	#superclass : #Object,
 	#instVars : [
 		'cakModel',
@@ -12,17 +12,17 @@ Class {
 }
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> associationDefinitions [
+CAKModelBuilder >> associationDefinitions [
 	^ associationsDefinition
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> cacheEntities [
+CAKModelBuilder >> cacheEntities [
 	entitiesCache := OrderedCollection withAll: self model allEntities
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> consistencyCheck: aDictionary [
+CAKModelBuilder >> consistencyCheck: aDictionary [
 	| allKnownSelectors |
 
 	self containmentSelectors
@@ -42,12 +42,12 @@ CAKModelBuilderTryAgain >> consistencyCheck: aDictionary [
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> containmentDefinitions [
+CAKModelBuilder >> containmentDefinitions [
 	^ containmentsDefinition
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> create [
+CAKModelBuilder >> create [
 	| types |
 	
 	self cacheEntities.
@@ -67,7 +67,7 @@ CAKModelBuilderTryAgain >> create [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> createAssociationRelations [
+CAKModelBuilder >> createAssociationRelations [
 	| result |
 	result := OrderedCollection new.
 
@@ -100,7 +100,7 @@ CAKModelBuilderTryAgain >> createAssociationRelations [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> createContainmentRelations [
+CAKModelBuilder >> createContainmentRelations [
 	| result |
 	result := OrderedCollection new.
 	self containmentDefinitions
@@ -132,7 +132,7 @@ CAKModelBuilderTryAgain >> createContainmentRelations [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> createContainmentRelations2 [
+CAKModelBuilder >> createContainmentRelations2 [
 	| result |
 	result := OrderedCollection new.
 	self containmentDefinitions
@@ -166,7 +166,7 @@ CAKModelBuilderTryAgain >> createContainmentRelations2 [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> createGroups: aDictionary [
+CAKModelBuilder >> createGroups: aDictionary [
 
 	aDictionary keysAndValuesDo: [:key :value |
 		| cakGroup |
@@ -180,7 +180,7 @@ CAKModelBuilderTryAgain >> createGroups: aDictionary [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> defineAssociationFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
+CAKModelBuilder >> defineAssociationFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
 
 	aModel isCollection 
 		ifTrue: [aModel do: [:each |
@@ -191,14 +191,14 @@ CAKModelBuilderTryAgain >> defineAssociationFrom: aSelectorOrBlock to: anotherSe
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> defineAssociationsFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModelsCollection [
+CAKModelBuilder >> defineAssociationsFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModelsCollection [
 
 	aModelsCollection do: [:aModel | self associationDefinitions add: (CAKAssociationDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock) ].
 
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> defineContainmentFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
+CAKModelBuilder >> defineContainmentFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModel [
 
 	aModel isCollection 
 		ifTrue: [aModel do: [:each |
@@ -209,19 +209,19 @@ CAKModelBuilderTryAgain >> defineContainmentFrom: aSelectorOrBlock to: anotherSe
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> defineContainmentsFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModelsCollection [
+CAKModelBuilder >> defineContainmentsFrom: aSelectorOrBlock to: anotherSelectorOrBlock on: aModelsCollection [
 
 	aModelsCollection do: [:aModel | self containmentDefinitions add: (CAKAssociationDef on: aModel from: aSelectorOrBlock to: anotherSelectorOrBlock) ].
 
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> entitiesCache [
+CAKModelBuilder >> entitiesCache [
 	^ entitiesCache
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> findCakEntitiesFor: aCollectionOfObjects [
+CAKModelBuilder >> findCakEntitiesFor: aCollectionOfObjects [
 	| result |
 
 	result := OrderedCollection new.
@@ -231,7 +231,7 @@ CAKModelBuilderTryAgain >> findCakEntitiesFor: aCollectionOfObjects [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> findCakEntityFor: anObject [
+CAKModelBuilder >> findCakEntityFor: anObject [
 	| result |
 	result := self entitiesCache detect: [:entity | entity model = anObject] ifNone: [nil].
 	result isNil
@@ -242,7 +242,7 @@ CAKModelBuilderTryAgain >> findCakEntityFor: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> findEntitiesFor: aCollectionOfModels [
+CAKModelBuilder >> findEntitiesFor: aCollectionOfModels [
 	| result |
 
 	aCollectionOfModels isCollection
@@ -252,7 +252,7 @@ CAKModelBuilderTryAgain >> findEntitiesFor: aCollectionOfModels [
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> identifyTypes [
+CAKModelBuilder >> identifyTypes [
 	| types |
 	
 	types := Dictionary new.
@@ -267,7 +267,7 @@ CAKModelBuilderTryAgain >> identifyTypes [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> inferAssociationRelations [
+CAKModelBuilder >> inferAssociationRelations [
 	"inferAssociationRelationsOn: method return the newly created associations if non are created means that all the entities has been covered"
 	| associations |
 	
@@ -277,7 +277,7 @@ CAKModelBuilderTryAgain >> inferAssociationRelations [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> inferAssociationRelationsOn: aCollectionOfAssociations [
+CAKModelBuilder >> inferAssociationRelationsOn: aCollectionOfAssociations [
 	| associations result assocToCreate |
 	
 	result := OrderedCollection new.
@@ -303,7 +303,7 @@ CAKModelBuilderTryAgain >> inferAssociationRelationsOn: aCollectionOfAssociation
 ]
 
 { #category : #initialization }
-CAKModelBuilderTryAgain >> initialize [ 
+CAKModelBuilder >> initialize [ 
 
 	super initialize.
 
@@ -315,7 +315,7 @@ CAKModelBuilderTryAgain >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-CAKModelBuilderTryAgain >> instanciateAssociationFrom: aDictionary [
+CAKModelBuilder >> instanciateAssociationFrom: aDictionary [
 	| result |
 
 	result := OrderedCollection new.
@@ -335,23 +335,23 @@ CAKModelBuilderTryAgain >> instanciateAssociationFrom: aDictionary [
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> model [
+CAKModelBuilder >> model [
 	^cakModel
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> model: aCAKModel [
+CAKModelBuilder >> model: aCAKModel [
 	cakModel := aCAKModel.
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> node: anObject [
+CAKModelBuilder >> node: anObject [
 	
 	^self nodes: (OrderedCollection with: anObject). 
 ]
 
 { #category : #accessing }
-CAKModelBuilderTryAgain >> nodes: aCollection [
+CAKModelBuilder >> nodes: aCollection [
 	| nodes |
 
 	self assert: [ aCollection isCollection ] description: 'A collection should be provided, else use #node: instead'.
