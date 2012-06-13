@@ -41,28 +41,31 @@ CAKModelBuilderTests >> testContainmentSelectors [
 
 { #category : #'as yet unclassified' }
 CAKModelBuilderTests >> testCreateAssociationRelations [
-	| builder cakFakeContainer fakeTarget1 fakeTarget2 containmentRelations |
-	
-	self flag: #TODO.
-	
+	| builder cakFakeContainer1 cakFakeContainer2 fakeTarget1 fakeTarget2 associations |
+		
 	builder := CAKModelBuilder new.
-	cakFakeContainer := CAKFakeContainerObject new.
+	
+	cakFakeContainer1 := CAKFakeContainerObject new.
+	cakFakeContainer2 := CAKFakeContainerObject new.
 	fakeTarget1 := CAKFakeContentObject new.
 	fakeTarget2 := CAKFakeContentObject new.
-	cakFakeContainer fakeContainment add: fakeTarget1.
-	cakFakeContainer fakeContainment add: fakeTarget2.
 	
-	builder nodes: (OrderedCollection with: cakFakeContainer with: fakeTarget1 with: fakeTarget2).
+	cakFakeContainer1 fakeContainment add: fakeTarget1.
+	cakFakeContainer2  fakeContainment add: fakeTarget2.
+	
+	fakeTarget1 fakeAssociation add: fakeTarget2.
+	
+	builder nodes: (OrderedCollection with: cakFakeContainer1 with: cakFakeContainer2 with: fakeTarget1 with: fakeTarget2).
 	builder cacheEntities.
 	
-	builder defineAssociation: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	builder defineAssociationFrom:  #yourself to: #fakeAssociation on: (OrderedCollection with: fakeTarget1 with: fakeTarget2).
 	
-	containmentRelations := builder createAssociationRelations: builder identifyTypes.
+	associations := builder createAssociationRelations.
 	
-	self assert: containmentRelations size = 2.
-	self assert: containmentRelations first associationSource model equals: cakFakeContainer.
-	self assert: (containmentRelations first associationTarget model = fakeTarget1 or: [ containmentRelations first associationTarget model = fakeTarget2 ]).
-	self assert: (containmentRelations second associationTarget model = fakeTarget1 or: [ containmentRelations second associationTarget model = fakeTarget2 ]).
+	self assert: associations size = 1.
+	self assert: (associations first associationSource model == fakeTarget1).
+	self assert: (associations first associationSource model == fakeTarget1 and: [ associations first associationTarget model == fakeTarget2 ]).
+	
 ]
 
 { #category : #'as yet unclassified' }
