@@ -6,8 +6,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 CAKAbstractAssociation class >> annotation [
-	<MSEClass: #CAKAbstractAssociation super: #MooseEntity>
-	<package: #'Carrack-Model'>
+	<MSEClass: #AbstractAssociation super: #CAKAbstractEntity>
+	<package: #CAK>
 	^self
 ]
 

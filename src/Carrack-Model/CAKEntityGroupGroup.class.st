@@ -6,7 +6,7 @@ Class {
 
 { #category : #meta }
 CAKEntityGroupGroup class >> annotation [
-	<MSEClass: #CAKEntityGroupGroup super: #MooseGroup>
-	<package: #'Carrack-Model'>
+	<MSEClass: #EntityGroupGroup super: #MooseGroup>
+	<package: #CAK>
 	^self
 ]

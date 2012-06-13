@@ -13,8 +13,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 CAKEntity class >> annotation [
-	<MSEClass: #CAKEntity super: #MooseEntity>
-	<package: #'Carrack-Model'>
+	<MSEClass: #Entity super: #CAKAbstractEntity>
+	<package: #CAK>
 	^self
 ]
 
@@ -36,6 +36,13 @@ CAKEntity >> addIncomingAssociation: aCAKAssociation [
 { #category : #accessing }
 CAKEntity >> addOutgoingAssociation: aCAKAssociation [
 	self outgoingAssociations add: aCAKAssociation
+]
+
+{ #category : #accessing }
+CAKEntity >> belongsTo [
+	self containerEntities isEmpty
+		ifTrue: [^nil]
+		ifFalse: [^self containerEntities ]
 ]
 
 { #category : #accessing }

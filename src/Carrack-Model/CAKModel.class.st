@@ -6,8 +6,8 @@ Class {
 
 { #category : #meta }
 CAKModel class >> annotation [
-	<MSEClass: #CAKModel super: #MooseAbstractGroup>
-	<package: #'Carrack-Model'>
+	<MSEClass: #Model super: #MooseModel>
+	<package: #CAK>
 	^self
 ]
 

@@ -11,8 +11,8 @@ Class {
 
 { #category : #meta }
 CAKEntityGroup class >> annotation [
-	<MSEClass: #CAKEntityGroup super: #MooseGroup>
-	<package: #'Carrack-Model'>
+	<MSEClass: #EntityGroup super: #MooseGroup>
+	<package: #CAK>
 	^self
 ]
 

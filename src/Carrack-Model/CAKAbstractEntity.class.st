@@ -7,6 +7,13 @@ Class {
 	#category : #'Carrack-Model'
 }
 
+{ #category : #'as yet unclassified' }
+CAKAbstractEntity class >> annotation [
+	<MSEClass: #AbstractEntity super: #Object>
+	<package: #CAK>
+	^self
+]
+
 { #category : #accessing }
 CAKAbstractEntity >> model [
 	^ model

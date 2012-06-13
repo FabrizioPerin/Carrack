@@ -10,8 +10,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 CAKAssociation class >> annotation [
-	<MSEClass: #CAKAssociation super: #CAKAbstractAssociation>
-	<package: #'Carrack-Model'>
+	<MSEClass: #Association super: #CAKAbstractAssociation>
+	<package: #CAK>
 	^self
 ]
 
