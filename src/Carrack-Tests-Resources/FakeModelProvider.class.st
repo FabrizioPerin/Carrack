@@ -18,7 +18,7 @@ FakeModelProvider >> cakModelOnModelWithOneLevel [
 	builder nodes: self modelWithOneLevel.
 	
 	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
-	builder defineContainement: #fakeContainment from: #CAKFakeContainerObject to: #CAKFakeContentObject.
+	
 	builder defineAssociation: #fakeAssociation from: #CAKFakeContentObject to: #CAKFakeContentObject.
 	
 	^builder create model
