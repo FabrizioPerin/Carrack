@@ -52,6 +52,14 @@ CAKAssociation >> associationTarget: aCarrackEntity [
 ]
 
 { #category : #accessing }
+CAKAssociation >> drillDownUntilLowestLevel [
+
+	( self model isCollection and: self model isArray not )
+		ifTrue: [^ self model collect: [:each | each drillDownUntilLowestLevel ] ]
+		ifFalse: [^ self model]
+]
+
+{ #category : #accessing }
 CAKAssociation >> from [
 	^self associationSource
 ]

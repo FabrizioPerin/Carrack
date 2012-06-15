@@ -12,9 +12,34 @@ CAKModel class >> annotation [
 ]
 
 { #category : #accessing }
+CAKModel >> allAssociationEntitiesFrom: aModel [
+	| cakEntity | 
+	cakEntity := self cakObjectOf: aModel.
+	
+	^ cakEntity outgoingAssociationEntities
+]
+
+{ #category : #accessing }
 CAKModel >> allAssociations [
 	<navigation: 'allAssociations'>
 	^self allWithType: CAKAssociation.
+]
+
+{ #category : #accessing }
+CAKModel >> allAssociationsFrom: aModel [
+	| cakEntity | 
+	cakEntity := self cakObjectOf: aModel.
+	
+	^ cakEntity outgoingAssociations.
+]
+
+{ #category : #accessing }
+CAKModel >> allAssociationsFrom: aModel to: anotherModel [
+	| assocs |
+	
+	assocs := self allAssociationsFrom: aModel.
+	
+	^ assocs select: [:each | each associationTarget = anotherModel ]
 ]
 
 { #category : #accessing }
@@ -71,6 +96,17 @@ CAKModel >> cacheGroups [
 			]
 		description: ('Caching <1p> groups in Moose model' expandMacrosWith: selectors size)
 		length: selectors size
+]
+
+{ #category : #accessing }
+CAKModel >> cakObjectOf: aModel [
+	^self allEntities detect: [:entity | entity model = aModel] ifNone: [nil]
+]
+
+{ #category : #accessing }
+CAKModel >> drillDownAllAssociationsFrom: aModel [
+
+	^ ( (self allAssociationsFrom: aModel ) collect: #drillDownUntilLowestLevel) flatten 
 ]
 
 { #category : #accessing }
