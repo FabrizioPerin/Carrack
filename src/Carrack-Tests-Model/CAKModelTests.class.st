@@ -111,15 +111,14 @@ CAKModelTests >> testdrillDownAllAssociationsFrom [
 	
 	model := builder create model.
 	
-	self assert: ( ( model drillDownAllAssociationsFrom: source1) isMemberOf: OrderedCollection ).
+	self assert: ( ( model drillDownAllAssociationsFrom: source1) isMemberOf: Array ).
 	self assert: ( model drillDownAllAssociationsFrom: source1) size equals: 1.
 	self assert: ( model drillDownAllAssociationsFrom: source1) first equals: source1.
 	
-	self assert: ( ( model drillDownAllAssociationsFrom: source2) isMemberOf: OrderedCollection ).
+	self assert: ( ( model drillDownAllAssociationsFrom: source2) isMemberOf: Array ).
 	self assert: ( model drillDownAllAssociationsFrom: source2) size equals: 1.
 	self assert: ( model drillDownAllAssociationsFrom: source2) first equals: source2.
-	
-	self assert: false.
+
 ]
 
 { #category : #'as yet unclassified' }

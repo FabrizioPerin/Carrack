@@ -82,7 +82,37 @@ CAKCSExperiments >> exp3 [
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 
 	builder defineContainmentsFrom: #containerComponent to: [:each | each containedElement methods ] on: MooseModel root first allComponentContainment.
-	builder defineAssociationsFrom: #sender to: #candidates on: (MooseModel root first allModelMethods collect: #outgoingInvocations).
+	builder defineAssociationsFrom: #accessor to: #variable on: MooseModel root first allAccesses.
+	builder create.
+	
+	Transcript show: 'FINISH!' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	
+	^builder model.
+]
+
+{ #category : #'as yet unclassified' }
+CAKCSExperiments >> exp4 [
+	" self new exp4 inspect "
+	" self new exp4 install "
+	
+	| builder |
+			
+	Transcript open.
+	Transcript show: 'Starting.' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	
+	builder := CAKModelBuilder new.
+	builder nodes: MooseModel root first allModelMethods.
+	builder nodes: MooseModel root first allModelClasses.
+	builder nodes: MooseModel root first allCSComponents.
+	
+	Transcript show: 'Nodes DONE.' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+
+	builder defineContainmentsFrom: #containerComponent to: [:each | each containedElement ] on: MooseModel root first allComponentContainment.
+	builder defineContainmentsFrom: #containerComponent to: [:each | each containedElement methods ] on: MooseModel root first allComponentContainment.
+	builder defineAssociationsFrom: #accessor to: [:each | each variable isNil ifTrue: [nil] ifFalse: [each variable belongsTo] ] on: MooseModel root first allAccesses.
 	builder create.
 	
 	Transcript show: 'FINISH!' , String cr.
