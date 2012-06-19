@@ -20,10 +20,18 @@ CAKAbstractAssociation >> from [
 ]
 
 { #category : #accessing }
+CAKAbstractAssociation >> fromModel [
+	<MSEProperty: #fromModel type: #FAMIXEntity>
+	<derived>
+	<MSEComment: 'Carrack entity model originating the association.'>
+	^self from model
+]
+
+{ #category : #accessing }
 CAKAbstractAssociation >> mooseDisplayStringOn: aStream [
 	self from mooseDisplayStringOn: aStream.
 	aStream nextPutAll: ' -> '.
-	self to mooseDisplayStringOn: aStream	
+	self to mooseDisplayStringOn: aStream
 ]
 
 { #category : #accessing }
@@ -32,4 +40,12 @@ CAKAbstractAssociation >> to [
 	<MSEComment: 'Generic accessor to the entity target of the association. Refined by subclasses'>
 	
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CAKAbstractAssociation >> toModel [
+	<MSEProperty: #targetModel type: #FAMIXEntity>
+	<derived>
+	<MSEComment: 'Carrack entity model target of this association.'>
+	^self to model
 ]

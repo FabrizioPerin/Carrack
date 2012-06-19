@@ -1,6 +1,9 @@
 Class {
 	#name : #CAKModel,
 	#superclass : #MooseModel,
+	#instVars : [
+		'entitiesCache'
+	],
 	#category : #'Carrack-Model'
 }
 
@@ -84,6 +87,12 @@ CAKModel >> allEntitiesOfType: aSymbol [
 ]
 
 { #category : #accessing }
+CAKModel >> cacheEntities [
+	entitiesCache := Dictionary new.
+	self allEntities do: [:entity | entitiesCache at: entity model put: entity].
+]
+
+{ #category : #accessing }
 CAKModel >> cacheGroups [
 	| selectors |
 	self privateState flushGroups.
@@ -106,7 +115,12 @@ CAKModel >> cakObjectOf: aModel [
 { #category : #accessing }
 CAKModel >> drillDownAllAssociationsFrom: aModel [
 
-	^ ( (self allAssociationsFrom: aModel ) collect: #drillDownUntilLowestLevel) flatten 
+	^ ( (self allAssociationsFrom: aModel ) collect: #drillDownUntilLowestLevel) deepFlatten 
+]
+
+{ #category : #accessing }
+CAKModel >> entitiesCache [
+	^ entitiesCache
 ]
 
 { #category : #accessing }

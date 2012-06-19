@@ -65,6 +65,11 @@ CAKAssociation >> from [
 ]
 
 { #category : #accessing }
+CAKAssociation >> hasBeenInfered [
+	^self model isCollection and: [self model size > 0 and: [self model first isMemberOf: CAKAssociation]]
+]
+
+{ #category : #accessing }
 CAKAssociation >> to [
 	^self associationTarget
 ]
