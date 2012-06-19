@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'cakModel',
 		'groups',
-		'entitiesCache',
 		'containmentsDefinition',
 		'associationsDefinition'
 	],
@@ -18,7 +17,7 @@ CAKModelBuilder >> associationDefinitions [
 
 { #category : #accessing }
 CAKModelBuilder >> cacheEntities [
-	entitiesCache := OrderedCollection withAll: self model allEntities
+	self model cacheEntities
 ]
 
 { #category : #accessing }
@@ -197,7 +196,7 @@ CAKModelBuilder >> defineContainmentsFrom: aSelectorOrBlock to: anotherSelectorO
 
 { #category : #accessing }
 CAKModelBuilder >> entitiesCache [
-	^ entitiesCache
+	^ self model entitiesCache
 ]
 
 { #category : #'as yet unclassified' }
@@ -213,7 +212,7 @@ CAKModelBuilder >> findCakEntitiesFor: aCollectionOfObjects [
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> findCakEntityFor: anObject [
 	| result |
-	result := self entitiesCache detect: [:entity | entity model = anObject] ifNone: [nil].
+	result := self entitiesCache at: anObject ifAbsent: [nil].
 	result isNil
 		ifTrue: [^OrderedCollection new].
 	
