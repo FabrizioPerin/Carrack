@@ -21,7 +21,8 @@ CAKExperimentsOnNewBuilder >> exp1 [
 	Transcript show: 'Nodes DONE.' , String cr.
 	Transcript show: DateAndTime now asTimeStamp asString , String cr.
 	
-	builder defineContainmentFrom: #yourself to: #methods on: MooseModel root first allClasses.
+	"builder defineContainmentFrom: #yourself to: #methods on: MooseModel root first allClasses."
+	builder defineContainmentFrom: #superclass to: #subclass on: MooseModel root first allInheritanceDefinitions.
 	builder defineAssociationFrom: #sender to: #candidates on: MooseModel root first allInvocations.
 	
 	builder create.
