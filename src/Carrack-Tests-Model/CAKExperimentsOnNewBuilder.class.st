@@ -225,3 +225,43 @@ CAKExperimentsOnNewBuilder >> exp7 [
 	
 	^builder model."
 ]
+
+{ #category : #'as yet unclassified' }
+CAKExperimentsOnNewBuilder >> exp8 [
+	"self new exp8"
+	
+	| builder |
+	Transcript open.
+	
+	Transcript show: 'Starting.' , String cr.
+	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	
+	builder := CAKModelBuilder new.
+	builder nodes: #(1 2 3 4 5 6 7).
+	
+	builder defineContainmentFrom: #first to: #second on: {#(1 2) . #(4 3) . #(5 3) . #(7 5) . #(7 4) . #(6 1)}.
+	builder defineAssociationFrom: #first to: #second on: {#(2 3)}. 
+	
+	builder create.
+	
+	^builder model
+
+]
+
+{ #category : #'as yet unclassified' }
+CAKExperimentsOnNewBuilder >> sampleGraphForPaper [
+	"self new sampleGraphForPaper"
+	
+	| builder |
+	
+	builder := CAKModelBuilder new.
+	builder nodes: #(1 2 3 4 5 6 7 8).
+	
+	builder defineContainmentFrom: #first to: #second on: {#(3 4) . #(2 3) . #(1 2) . #(6 5) . #(7 5) . #(8 7)}.
+	builder defineAssociationFrom: #first to: #second on: {#(4 5)}. 
+	
+	builder create.
+	
+	^builder model
+	
+]
