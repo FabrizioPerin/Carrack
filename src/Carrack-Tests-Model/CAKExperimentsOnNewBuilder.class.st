@@ -253,15 +253,31 @@ CAKExperimentsOnNewBuilder >> sampleGraphForPaper [
 	"self new sampleGraphForPaper"
 	
 	| builder |
-	
 	builder := CAKModelBuilder new.
+	
 	builder nodes: #(1 2 3 4 5 6 7 8).
 	
 	builder defineContainmentFrom: #first to: #second on: {#(3 4) . #(2 3) . #(1 2) . #(6 5) . #(7 5) . #(8 7)}.
 	builder defineAssociationFrom: #first to: #second on: {#(4 5)}. 
 	
 	builder create.
+	^builder model
 	
+]
+
+{ #category : #'as yet unclassified' }
+CAKExperimentsOnNewBuilder >> sampleGraphForPaperSecondExample [
+	"self new sampleGraphForPaper"
+	
+	| builder |
+	builder := CAKModelBuilder new.
+	
+	builder nodes: #(1 2 3 4 5 6 7 8).
+	
+	builder defineContainmentFrom: #first to: #second on: {#(3 4) . #(2 3) . #(1 2) . #(7 6) . #(7 5) . #(8 7)}.
+	builder defineAssociationFrom: #first to: #second on: {#(4 5) . #(4 6)}. 
+	
+	builder create.
 	^builder model
 	
 ]
