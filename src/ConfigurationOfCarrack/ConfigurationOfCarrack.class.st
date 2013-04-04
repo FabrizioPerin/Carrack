@@ -31,10 +31,45 @@ ConfigurationOfCarrack class >> loadDefault [
 
 ]
 
+{ #category : #loading }
+ConfigurationOfCarrack class >> loadDevelopment [
+
+	(self project version: 'development') load.
+
+]
+
 { #category : #accessing }
 ConfigurationOfCarrack class >> project [
 
 	^self new project
+]
+
+{ #category : #baselines }
+ConfigurationOfCarrack >> baseline10: spec [ 
+	<version: '1.0-baseline'>
+	
+	spec
+		for: #common
+		do: [ 
+			spec blessing: #default. 
+			spec repository: 'http://www.squeaksource.com/Carrack'.
+			
+		spec
+			"Model"
+			package: 'Carrack-Model';
+			
+			"builder"
+			package: 'Carrack-Builder';
+			
+			"Tests"
+			package: 'Carrack-Tests-Resources';
+			package: 'Carrack-Tests-Model' with: [
+				spec requires: #('Carrack-Model' 'Carrack-Tests-Resources')];
+			package: 'Carrack-Tests-Builder' with: [
+				spec requires: #('Carrack-Builder' 'Carrack-Tests-Resources')].
+			
+		spec group: 'Tests' with: #( 
+			'Carrack-Tests-Model') ]
 ]
 
 { #category : #baselines }
@@ -69,6 +104,14 @@ ConfigurationOfCarrack >> default: spec [
 			
 		spec group: 'Tests' with: #( 
 			'Carrack-Tests-Model') ]
+]
+
+{ #category : #baselines }
+ConfigurationOfCarrack >> development: spec [
+	<symbolicVersion: #development>
+
+	spec for: #'pharo1.4.x' version: '1.0-baseline'.
+	spec for: #'pharo2.x' version: '1.0-baseline'.
 ]
 
 { #category : #accessing }
