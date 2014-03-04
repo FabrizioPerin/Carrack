@@ -135,7 +135,7 @@ CAKModelTests >> testdrillDownAllAssociationsFromGraph [
 	model := builder create model.
 	
 	self assert: ( model drillDownAllAssociationsFrom: 1 ) isCollection.
-	self assert: ( model drillDownAllAssociationsFrom: 1) size equals: 2.
-	self assert: ( model drillDownAllAssociationsFrom: 1) first equals: 3->5.
-	self assert: ( model drillDownAllAssociationsFrom: 1) second equals: 3->7.
+	self assert: ( model drillDownAllAssociationsFrom: 1 ) size equals: 2.
+	self assert: ( ( model drillDownAllAssociationsFrom: 1 ) includes: ( 3->5 ) ).
+	self assert: ( ( model drillDownAllAssociationsFrom: 1 ) includes: ( 3->7 ) ).
 ]
