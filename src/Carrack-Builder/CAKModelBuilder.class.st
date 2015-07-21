@@ -27,21 +27,21 @@ CAKModelBuilder >> containmentDefinitions [
 
 { #category : #'as yet unclassified' }
 CAKModelBuilder >> create [
-	| types |
+	|  |
 	
 	self cacheEntities.
 
 	self createContainmentRelations.
 	Transcript show: 'Containment DONE.' , String cr.
-	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	Transcript show: DateAndTime now asDateAndTime asString , String cr.
 	
 	self createAssociationRelations.
 	Transcript show: 'Association DONE.' , String cr.
-	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	Transcript show: DateAndTime now asDateAndTime asString , String cr.
 	
 	self inferAssociationRelations.
 	Transcript show: 'Infer associations DONE.' , String cr.
-	Transcript show: DateAndTime now asTimeStamp asString , String cr.
+	Transcript show: DateAndTime now asDateAndTime asString , String cr.
 
 ]
 
