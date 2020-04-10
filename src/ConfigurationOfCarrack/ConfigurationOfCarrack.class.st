@@ -140,6 +140,8 @@ ConfigurationOfCarrack >> development: spec [
 
 	spec for: #'pharo1.4.x' version: '1.0-baseline'.
 	spec for: #'pharo2.x' version: '2.0-baseline'.
+	spec for: #'pharo7.x' version: '2.0-baseline'.
+	spec for: #'pharo8.x' version: '2.0-baseline'.
 ]
 
 { #category : #accessing }
